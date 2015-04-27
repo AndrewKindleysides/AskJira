@@ -16,13 +16,23 @@ namespace App
             };
         }
 
-        public int T3TotalWithStatus(string status)
+        public int JirasWithStatusForProjectCode(string status, string projectCode)
         {
-            var response = _client.DownloadString(
-                string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=status='{0}' AND project=LCSMLC", status));
+            var url = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=status='{0}' AND project={1}", status,projectCode);
+            var response = _client.DownloadString(url);
             var json = JObject.Parse(response);
             Console.WriteLine(json);
             return (int)json["total"];
+        }
+
+        public int MLCT3AwaitingTriage()
+        {
+            return JirasWithStatusForProjectCode("Awaiting Triage", "LCSMLC");
+        }
+
+        public int LaserformT3AwaitingTriage()
+        {
+            return JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
         }
     }
 }
