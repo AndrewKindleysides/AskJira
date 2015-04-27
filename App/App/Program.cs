@@ -9,7 +9,7 @@ namespace App
         public static void Main(string[] args)
         {
             var conf = new ApplicationConfig();
-            var jiraReq = new JiraRequest(User.Authenticate());
+            var jiraReq = new JiraRequest(new User().AuthenticationToken());
 
             while (true)
             {
