@@ -10,13 +10,14 @@ namespace App
         {
             var conf = new ApplicationConfig();
             var jiraReq = new JiraRequest(new User().AuthenticationToken());
+            var soundPlayer = new SoundPlayer(Resources.alarm);
 
             while (true)
             {
                 var result = jiraReq.T3TotalWithStatus(conf.Status);
                 if (result >= 1)
                 {
-                    new SoundPlayer(Resources.alarm).Play();
+                    soundPlayer.Play();
                 }
                 Thread.Sleep(TimeSpan.FromSeconds(conf.WaitTime));
             }
