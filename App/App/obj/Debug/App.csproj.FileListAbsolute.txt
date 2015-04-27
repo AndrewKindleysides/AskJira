@@ -1,0 +1,10 @@
+C:\repos\Jira\App\App\bin\Debug\App.exe.config
+C:\repos\Jira\App\App\bin\Debug\App.exe
+C:\repos\Jira\App\App\bin\Debug\App.pdb
+C:\repos\Jira\App\App\obj\Debug\App.csprojResolveAssemblyReference.cache
+C:\repos\Jira\App\App\obj\Debug\App.exe
+C:\repos\Jira\App\App\obj\Debug\App.pdb
+C:\repos\Jira\App\App\bin\Debug\Newtonsoft.Json.dll
+C:\repos\Jira\App\App\bin\Debug\Newtonsoft.Json.xml
+C:\repos\Jira\App\App\obj\Debug\App.Resources.resources
+C:\repos\Jira\App\App\obj\Debug\App.csproj.GenerateResource.Cache
