@@ -18,10 +18,12 @@ namespace App
 
         public int JirasWithStatusForProjectCode(string status, string projectCode)
         {
-            var url = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=status='{0}' AND project={1}", status,projectCode);
+            var url = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=status='{0}' AND project={1} AND 'T3 - Type' != 'Enhancement'", status, projectCode);
             var response = _client.DownloadString(url);
             var json = JObject.Parse(response);
-            Console.WriteLine(json);
+            Console.WriteLine("Time polled: {0}", DateTime.Now);
+            Console.WriteLine("Json: {0}", json);
+            Console.WriteLine();
             return (int)json["total"];
         }
 
