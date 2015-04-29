@@ -36,7 +36,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(982, 454);
             this.Name = "MainWindow";
-            this.Text = "MainWindow";
+            this.Text = "Ask Jira";
             this.ResumeLayout(false);
 
         }
