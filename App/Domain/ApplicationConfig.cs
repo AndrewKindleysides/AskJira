@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 
-namespace App
+namespace Domain
 {
     public class ApplicationConfig
     {
@@ -10,7 +10,7 @@ namespace App
         public ApplicationConfig()
         {
             Status = ConfigurationManager.AppSettings["Status"];
-            WaitTime = Convert.ToDouble(ConfigurationManager.AppSettings["WaitTimeInSeconds"]);
+            WaitTime = Convert.ToDouble((string) ConfigurationManager.AppSettings["WaitTimeInSeconds"]);
         }
     }
 }

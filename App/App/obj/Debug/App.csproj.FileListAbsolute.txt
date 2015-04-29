@@ -16,5 +16,5 @@ C:\repos\AskJira\App\App\bin\Debug\App.pdb
 C:\repos\AskJira\App\App\bin\Debug\Newtonsoft.Json.dll
 C:\repos\AskJira\App\App\bin\Debug\Newtonsoft.Json.xml
 C:\repos\AskJira\App\App\obj\Debug\App.csprojResolveAssemblyReference.cache
-C:\repos\AskJira\App\App\obj\Debug\App.Resources.resources
-C:\repos\AskJira\App\App\obj\Debug\App.csproj.GenerateResource.Cache
+C:\repos\AskJira\App\App\bin\Debug\Domain.dll
+C:\repos\AskJira\App\App\bin\Debug\Domain.pdb

@@ -2,7 +2,7 @@
 using System.Media;
 using System.Threading;
 
-namespace App
+namespace Domain
 {
     public class AskJira
     {
@@ -12,7 +12,7 @@ namespace App
         public AskJira()
         {
             _waitTime = new ApplicationConfig().WaitTime;
-            _soundPlayer = new SoundPlayer(Resources.alarm);
+            _soundPlayer = new SoundPlayer(Resource.alarm);
         }
 
         public void Start(Func<int> request)

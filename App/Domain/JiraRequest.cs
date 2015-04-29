@@ -2,7 +2,7 @@ using System;
 using System.Net;
 using Newtonsoft.Json.Linq;
 
-namespace App
+namespace Domain
 {
     public class JiraRequest
     {
@@ -22,7 +22,7 @@ namespace App
             var response = _client.DownloadString(url);
             var json = JObject.Parse(response);
             Console.WriteLine("Time polled: {0}", DateTime.Now);
-            Console.WriteLine("Json: {0}", json);
+            Console.WriteLine((string) "Json: {0}", (object) json);
             Console.WriteLine();
             return (int)json["total"];
         }

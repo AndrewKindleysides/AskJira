@@ -1,4 +1,6 @@
-﻿namespace App
+﻿using Domain;
+
+namespace App
 {
     public class Program
     {
