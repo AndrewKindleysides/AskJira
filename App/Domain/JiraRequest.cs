@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Newtonsoft.Json.Linq;
 
@@ -27,10 +29,12 @@ namespace Domain
             return (int)json["total"];
         }
 
-        public dynamic MLCJiras()
+        public List<Jira> MLCJiras()
         {
             var response = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC");
-            return JObject.Parse(response);
+            var fromObject = JArray.FromObject(JObject.Parse(response)["issues"]);
+            var objs = fromObject.Select(e => e["key"]);
+            return objs.Select(obj => new Jira(obj.ToString())).ToList();
         }
         public int MLCT3AwaitingTriage()
         {
@@ -41,5 +45,15 @@ namespace Domain
         {
             return JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
         }
+    }
+
+    public class Jira
+    {
+        public Jira(string key)
+        {
+            Name = key;
+        }
+
+        public string Name { get; set; }
     }
 }

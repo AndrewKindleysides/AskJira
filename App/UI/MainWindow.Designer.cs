@@ -44,9 +44,9 @@
             this.SummaryText,
             this.DateCreated,
             this.ClientName});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 115);
+            this.dataGridView1.Location = new System.Drawing.Point(3, 12);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1018, 194);
+            this.dataGridView1.Size = new System.Drawing.Size(511, 613);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 

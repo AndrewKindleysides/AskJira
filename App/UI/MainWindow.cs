@@ -41,8 +41,11 @@ namespace UI
                 AppUser.Password = loginScreen.Password;
             }
             var jiraRequest = new JiraRequest(AppUser.AuthenticationToken());
-            var jiras = jiraRequest.MLCJiras();
-            var str = "";
+
+            foreach (var jira in jiraRequest.MLCJiras())
+            {
+                dataGridView1.Rows.Add(jira.Name);
+            }
         }
     }
 }
