@@ -41,7 +41,7 @@ namespace UI
                 AppUser.Password = loginScreen.Password;
             }
             var jiraRequest = new JiraRequest(AppUser.AuthenticationToken());
-            var jiras = jiraRequest.MLCT3AwaitingTriage();
+            var jiras = jiraRequest.MLCJiras();
             var str = "";
         }
     }

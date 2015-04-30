@@ -27,6 +27,11 @@ namespace Domain
             return (int)json["total"];
         }
 
+        public dynamic MLCJiras()
+        {
+            var response = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC");
+            return JObject.Parse(response);
+        }
         public int MLCT3AwaitingTriage()
         {
             return JirasWithStatusForProjectCode("Awaiting Triage", "LCSMLC");
