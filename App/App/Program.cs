@@ -6,7 +6,7 @@ namespace App
     {
         public static void Main(string[] args)
         {
-            var jiraRequest = new JiraRequest(new User().AuthenticationToken());
+            var jiraRequest = new JiraRequest(new UserLogin(new User()).AuthenticationToken());
             new AskJira().Start(jiraRequest.MLCT3AwaitingTriage);
         }
     }

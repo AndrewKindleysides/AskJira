@@ -22,7 +22,7 @@ namespace Domain
             var response = _client.DownloadString(url);
             var json = JObject.Parse(response);
             Console.WriteLine("Time polled: {0}", DateTime.Now);
-            Console.WriteLine((string) "Json: {0}", (object) json);
+            Console.WriteLine("Json: {0}", json);
             Console.WriteLine();
             return (int)json["total"];
         }

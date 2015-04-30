@@ -28,20 +28,70 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.JiraLink = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SummaryText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ClientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.JiraLink,
+            this.SummaryText,
+            this.DateCreated,
+            this.ClientName});
+            this.dataGridView1.Location = new System.Drawing.Point(12, 115);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(1018, 194);
+            this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // JiraLink
+            // 
+            this.JiraLink.HeaderText = "Jira";
+            this.JiraLink.Name = "JiraLink";
+            this.JiraLink.Width = 160;
+            // 
+            // SummaryText
+            // 
+            this.SummaryText.HeaderText = "Summary";
+            this.SummaryText.Name = "SummaryText";
+            // 
+            // DateCreated
+            // 
+            this.DateCreated.HeaderText = "Date Created";
+            this.DateCreated.Name = "DateCreated";
+            // 
+            // ClientName
+            // 
+            this.ClientName.HeaderText = "Client";
+            this.ClientName.Name = "ClientName";
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(982, 454);
+            this.ClientSize = new System.Drawing.Size(1256, 637);
+            this.Controls.Add(this.dataGridView1);
             this.Name = "MainWindow";
             this.Text = "Ask Jira";
+            this.Load += new System.EventHandler(this.MainWindow_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn JiraLink;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SummaryText;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DateCreated;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ClientName;
     }
 }
 
