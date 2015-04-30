@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace UI
@@ -14,7 +7,17 @@ namespace UI
     {
         public SplashScreen()
         {
+            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            this.BackColor = Color.Transparent;
             InitializeComponent();
+            progressBarTimer.Start();
+        }
+
+        private void progressBarTimer_Tick(object sender, System.EventArgs e)
+        {
+            progressBar.Increment(1);
+            if(progressBar.Value == 100)
+                progressBarTimer.Stop();
         }
     }
 }

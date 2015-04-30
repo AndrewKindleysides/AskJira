@@ -21,16 +21,13 @@ namespace App
             Console.WriteLine();
         }
 
-        public string AuthenticationToken()
+        public string GetAuthenticationToken()
         {
             Login();
-            return Base64Encode(string.Format("{0}:{1}", _user.Username, _user.Password));
+            return _user.AuthenticationToken();
         }
 
-        private string Base64Encode(string plainText)
-        {
-            return Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(plainText));
-        }
+        
 
         private static string ReturnPassword()
         {
