@@ -30,14 +30,14 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.jiraGrid = new System.Windows.Forms.DataGridView();
-            this.searchBox = new System.Windows.Forms.TextBox();
-            this.searchButton = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.OrderNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.JiraLink = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SummaryText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ClientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.searchBox = new System.Windows.Forms.TextBox();
+            this.searchButton = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.jiraGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -57,35 +57,6 @@
             this.jiraGrid.RowHeadersVisible = false;
             this.jiraGrid.Size = new System.Drawing.Size(1172, 522);
             this.jiraGrid.TabIndex = 0;
-            this.jiraGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // searchBox
-            // 
-            this.searchBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.searchBox.Location = new System.Drawing.Point(12, 13);
-            this.searchBox.Name = "searchBox";
-            this.searchBox.Size = new System.Drawing.Size(288, 20);
-            this.searchBox.TabIndex = 1;
-            // 
-            // searchButton
-            // 
-            this.searchButton.Location = new System.Drawing.Point(306, 12);
-            this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(80, 21);
-            this.searchButton.TabIndex = 2;
-            this.searchButton.Text = "Search";
-            this.searchButton.UseVisualStyleBackColor = true;
-            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::UI.Resources.logo;
-            this.pictureBox1.Location = new System.Drawing.Point(1034, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(150, 84);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
             // 
             // OrderNumber
             // 
@@ -117,6 +88,34 @@
             this.ClientName.HeaderText = "Client";
             this.ClientName.Name = "ClientName";
             this.ClientName.Width = 58;
+            // 
+            // searchBox
+            // 
+            this.searchBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.searchBox.Location = new System.Drawing.Point(12, 13);
+            this.searchBox.Name = "searchBox";
+            this.searchBox.Size = new System.Drawing.Size(288, 20);
+            this.searchBox.TabIndex = 1;
+            // 
+            // searchButton
+            // 
+            this.searchButton.Location = new System.Drawing.Point(306, 12);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Size = new System.Drawing.Size(80, 21);
+            this.searchButton.TabIndex = 2;
+            this.searchButton.Text = "Search";
+            this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::UI.Resources.logo;
+            this.pictureBox1.Location = new System.Drawing.Point(1034, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(150, 84);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
             // 
             // MainWindow
             // 

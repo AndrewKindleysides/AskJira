@@ -27,11 +27,6 @@ namespace UI
         {
             Application.Run(new SplashScreen());
         }
-        
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            
-        }
 
         private void MainWindow_Load(object sender, System.EventArgs e)
         {
