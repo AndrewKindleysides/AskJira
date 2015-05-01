@@ -99,8 +99,9 @@ namespace Domain
 
         public List<Jira> SearchMLCJiras(string searchItem)
         {
-            var searchText = string.Format("summary ~ {0} OR description ~ {0} OR comment ~ {0}", searchItem);
-            var response = _client.DownloadString(string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND {0}",searchText));
+            var searchText = string.Format("(summary ~ {0} OR description ~ {0} OR comment ~ {0})", searchItem);
+            var address = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND {0}",searchText);
+            var response = _client.DownloadString(address);
             return GetJirasFromResult(response);
         }
     }
