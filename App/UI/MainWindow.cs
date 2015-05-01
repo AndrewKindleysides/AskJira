@@ -45,11 +45,11 @@ namespace UI
 
         private void searchButton_Click(object sender, System.EventArgs e)
         {
-            jiraGrid.Rows.Clear();
             var jiraRequest = new JiraRequest(AppUser.AuthenticationToken());
-
             var mlcJiras = jiraRequest.SearchMLCJiras(searchBox.Text);
 
+            jiraGrid.Rows.Clear();
+            
             for (var index = 0; index < mlcJiras.Count; index++)
             {
                 var jira = mlcJiras[index];
