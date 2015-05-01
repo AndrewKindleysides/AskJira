@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Threading;
 using Domain;
 
@@ -40,11 +41,19 @@ namespace UI
                 AppUser.Username = loginScreen.Username;
                 AppUser.Password = loginScreen.Password;
             }
+        }
+
+        private void searchButton_Click(object sender, System.EventArgs e)
+        {
+            jiraGrid.Rows.Clear();
             var jiraRequest = new JiraRequest(AppUser.AuthenticationToken());
 
-            foreach (var jira in jiraRequest.MLCJiras())
+            var mlcJiras = jiraRequest.SearchMLCJiras(searchBox.Text);
+
+            for (var index = 0; index < mlcJiras.Count; index++)
             {
-                dataGridView1.Rows.Add(jira.Name, jira.Summary, jira.DateCreated, jira.Client);
+                var jira = mlcJiras[index];
+                jiraGrid.Rows.Add(index,jira.Name, jira.Summary, jira.DateCreated, jira.Client);
             }
         }
     }

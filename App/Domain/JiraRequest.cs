@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -57,17 +58,22 @@ namespace Domain
         public List<Jira> MLCJiras()
         {
             var response = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC");
+            return GetJirasFromResult(response);
+        }
+
+        private static List<Jira> GetJirasFromResult(string response)
+        {
             var issues = JObject.Parse(response)["issues"].ToObject<JArray>();
 
             return (from issue in issues
-                    let fields = issue["fields"]
-                    select new Jira()
-                    {
-                        Name = issue["key"].ToString(),
-                        Summary = fields["summary"].ToString(),
-                        DateCreated = fields["created"].ToObject<DateTime>(),
-                        Client = fields[Customfield].ToString()
-                    }).ToList();
+                let fields = issue["fields"]
+                select new Jira()
+                {
+                    Name = issue["key"].ToString(),
+                    Summary = fields["summary"].ToString(),
+                    DateCreated = fields["created"].ToObject<DateTime>(),
+                    Client = fields[Customfield] != null ? fields[Customfield].ToString(): "No Client Set"
+                }).ToList();
         }
 
         private IEnumerable<JToken> GetBatchOfJiras(int startAt)
@@ -89,6 +95,13 @@ namespace Domain
         public int LaserformT3AwaitingTriage()
         {
             return JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
+        }
+
+        public List<Jira> SearchMLCJiras(string searchItem)
+        {
+            var searchText = string.Format("summary ~ {0} OR description ~ {0} OR comment ~ {0}", searchItem);
+            var response = _client.DownloadString(string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND {0}",searchText));
+            return GetJirasFromResult(response);
         }
     }
 
