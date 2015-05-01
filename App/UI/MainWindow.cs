@@ -29,7 +29,7 @@ namespace UI
         
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            
         }
 
         private void MainWindow_Load(object sender, System.EventArgs e)
@@ -44,7 +44,7 @@ namespace UI
 
             foreach (var jira in jiraRequest.MLCJiras())
             {
-                dataGridView1.Rows.Add(jira.Name);
+                dataGridView1.Rows.Add(jira.Name, jira.Summary, jira.DateCreated, jira.Client);
             }
         }
     }

@@ -38,15 +38,16 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.JiraLink,
             this.SummaryText,
             this.DateCreated,
             this.ClientName});
-            this.dataGridView1.Location = new System.Drawing.Point(3, 12);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 12);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(511, 613);
+            this.dataGridView1.Size = new System.Drawing.Size(1232, 613);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -54,22 +55,25 @@
             // 
             this.JiraLink.HeaderText = "Jira";
             this.JiraLink.Name = "JiraLink";
-            this.JiraLink.Width = 160;
+            this.JiraLink.Width = 48;
             // 
             // SummaryText
             // 
             this.SummaryText.HeaderText = "Summary";
             this.SummaryText.Name = "SummaryText";
+            this.SummaryText.Width = 75;
             // 
             // DateCreated
             // 
             this.DateCreated.HeaderText = "Date Created";
             this.DateCreated.Name = "DateCreated";
+            this.DateCreated.Width = 95;
             // 
             // ClientName
             // 
             this.ClientName.HeaderText = "Client";
             this.ClientName.Name = "ClientName";
+            this.ClientName.Width = 58;
             // 
             // MainWindow
             // 
