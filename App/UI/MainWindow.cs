@@ -41,14 +41,22 @@ namespace UI
         private void searchButton_Click(object sender, System.EventArgs e)
         {
             var jiraRequest = new JiraRequest(AppUser.AuthenticationToken());
-            var mlcJiras = jiraRequest.SearchMLCJiras(searchBox.Text);
+            var mlcJiras = jiraRequest.SearchMLCJiras(searchBox.Text, dateFrom.Value, dateTo.Value);
 
             jiraGrid.Rows.Clear();
             
-            for (var index = 0; index < mlcJiras.Count; index++)
+            if (mlcJiras.Count > 0)
             {
-                var jira = mlcJiras[index];
-                jiraGrid.Rows.Add(index,jira.Name, jira.Summary, jira.DateCreated, jira.Client);
+                noResultsText.Visible = false;
+                for (var index = 0; index < mlcJiras.Count; index++)
+                {
+                    var jira = mlcJiras[index];
+                    jiraGrid.Rows.Add(index, jira.Name, jira.Summary, jira.DateCreated, jira.Client);
+                }
+            }
+            else
+            {
+                noResultsText.Visible = true;
             }
         }
     }

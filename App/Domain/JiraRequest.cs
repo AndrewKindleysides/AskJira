@@ -97,14 +97,15 @@ namespace Domain
             return JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
         }
 
-        public List<Jira> SearchMLCJiras(string searchItem)
+        public List<Jira> SearchMLCJiras(string searchItem, DateTime dateFrom, DateTime dateTo)
         {
             var searchText = string.Format("(summary ~ {0} OR description ~ {0} OR comment ~ {0})", searchItem);
-            var address = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND {0}",searchText);
+            var dateRange = string.Format("created >= '{0}' AND created <= '{1}'", dateFrom.Date.ToString("yyyy-MM-dd h:mm").Replace('/', '-'), dateTo.Date.ToString("yyyy-MM-dd h:mm").Replace('/', '-'));
+            var address = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND {0} AND {1}", searchText, dateRange);
             var response = _client.DownloadString(address);
             return GetJirasFromResult(response);
         }
-    }
+ }
 
     public class Jira
     {

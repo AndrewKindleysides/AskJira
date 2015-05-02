@@ -30,20 +30,23 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.jiraGrid = new System.Windows.Forms.DataGridView();
+            this.searchBox = new System.Windows.Forms.TextBox();
+            this.searchButton = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.dateFrom = new System.Windows.Forms.DateTimePicker();
+            this.dateTo = new System.Windows.Forms.DateTimePicker();
+            this.dateFromLabel = new System.Windows.Forms.Label();
+            this.dateToLabel = new System.Windows.Forms.Label();
+            this.textLabel = new System.Windows.Forms.Label();
             this.OrderNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.JiraLink = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SummaryText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ClientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.searchBox = new System.Windows.Forms.TextBox();
-            this.searchButton = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.dateFrom = new System.Windows.Forms.DateTimePicker();
-            this.toDate = new System.Windows.Forms.DateTimePicker();
-            this.dateFromLabel = new System.Windows.Forms.Label();
-            this.dateToLabel = new System.Windows.Forms.Label();
+            this.noResultsText = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.jiraGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -53,7 +56,8 @@
             this.jiraGrid.AllowUserToAddRows = false;
             this.jiraGrid.AllowUserToDeleteRows = false;
             this.jiraGrid.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
             this.jiraGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.jiraGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
@@ -81,6 +85,8 @@
             this.jiraGrid.Name = "jiraGrid";
             this.jiraGrid.ReadOnly = true;
             this.jiraGrid.RowHeadersVisible = false;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Silver;
+            this.jiraGrid.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.jiraGrid.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.jiraGrid.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
             this.jiraGrid.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
@@ -88,6 +94,82 @@
             this.jiraGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.jiraGrid.Size = new System.Drawing.Size(965, 537);
             this.jiraGrid.TabIndex = 0;
+            // 
+            // searchBox
+            // 
+            this.searchBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.searchBox.Location = new System.Drawing.Point(79, 12);
+            this.searchBox.Name = "searchBox";
+            this.searchBox.Size = new System.Drawing.Size(288, 20);
+            this.searchBox.TabIndex = 1;
+            // 
+            // searchButton
+            // 
+            this.searchButton.Location = new System.Drawing.Point(373, 12);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Size = new System.Drawing.Size(60, 20);
+            this.searchButton.TabIndex = 2;
+            this.searchButton.Text = "Search";
+            this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.Image = global::UI.Resources.logo;
+            this.pictureBox1.Location = new System.Drawing.Point(846, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(131, 70);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
+            // 
+            // dateFrom
+            // 
+            this.dateFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateFrom.Location = new System.Drawing.Point(79, 38);
+            this.dateFrom.Name = "dateFrom";
+            this.dateFrom.Size = new System.Drawing.Size(84, 20);
+            this.dateFrom.TabIndex = 4;
+            this.dateFrom.Value = new System.DateTime(2015, 5, 2, 20, 30, 8, 0);
+            // 
+            // dateTo
+            // 
+            this.dateTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTo.Location = new System.Drawing.Point(79, 62);
+            this.dateTo.Name = "dateTo";
+            this.dateTo.Size = new System.Drawing.Size(84, 20);
+            this.dateTo.TabIndex = 5;
+            // 
+            // dateFromLabel
+            // 
+            this.dateFromLabel.AutoSize = true;
+            this.dateFromLabel.ForeColor = System.Drawing.Color.White;
+            this.dateFromLabel.Location = new System.Drawing.Point(14, 44);
+            this.dateFromLabel.Name = "dateFromLabel";
+            this.dateFromLabel.Size = new System.Drawing.Size(59, 13);
+            this.dateFromLabel.TabIndex = 6;
+            this.dateFromLabel.Text = "Date From:";
+            // 
+            // dateToLabel
+            // 
+            this.dateToLabel.AutoSize = true;
+            this.dateToLabel.ForeColor = System.Drawing.Color.White;
+            this.dateToLabel.Location = new System.Drawing.Point(24, 68);
+            this.dateToLabel.Name = "dateToLabel";
+            this.dateToLabel.Size = new System.Drawing.Size(49, 13);
+            this.dateToLabel.TabIndex = 7;
+            this.dateToLabel.Text = "Date To:";
+            // 
+            // textLabel
+            // 
+            this.textLabel.AutoSize = true;
+            this.textLabel.ForeColor = System.Drawing.Color.White;
+            this.textLabel.Location = new System.Drawing.Point(5, 16);
+            this.textLabel.Name = "textLabel";
+            this.textLabel.Size = new System.Drawing.Size(68, 13);
+            this.textLabel.TabIndex = 8;
+            this.textLabel.Text = "Search Text:";
             // 
             // OrderNumber
             // 
@@ -122,68 +204,18 @@
             this.ClientName.Name = "ClientName";
             this.ClientName.ReadOnly = true;
             // 
-            // searchBox
+            // noResultsText
             // 
-            this.searchBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.searchBox.Location = new System.Drawing.Point(79, 12);
-            this.searchBox.Name = "searchBox";
-            this.searchBox.Size = new System.Drawing.Size(288, 20);
-            this.searchBox.TabIndex = 1;
-            // 
-            // searchButton
-            // 
-            this.searchButton.Location = new System.Drawing.Point(373, 12);
-            this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(60, 20);
-            this.searchButton.TabIndex = 2;
-            this.searchButton.Text = "Search";
-            this.searchButton.UseVisualStyleBackColor = true;
-            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Image = global::UI.Resources.logo;
-            this.pictureBox1.Location = new System.Drawing.Point(846, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(131, 70);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
-            // 
-            // dateFrom
-            // 
-            this.dateFrom.Location = new System.Drawing.Point(79, 38);
-            this.dateFrom.Name = "dateFrom";
-            this.dateFrom.Size = new System.Drawing.Size(118, 20);
-            this.dateFrom.TabIndex = 4;
-            // 
-            // toDate
-            // 
-            this.toDate.Location = new System.Drawing.Point(79, 62);
-            this.toDate.Name = "toDate";
-            this.toDate.Size = new System.Drawing.Size(118, 20);
-            this.toDate.TabIndex = 5;
-            // 
-            // dateFromLabel
-            // 
-            this.dateFromLabel.AutoSize = true;
-            this.dateFromLabel.ForeColor = System.Drawing.Color.White;
-            this.dateFromLabel.Location = new System.Drawing.Point(14, 44);
-            this.dateFromLabel.Name = "dateFromLabel";
-            this.dateFromLabel.Size = new System.Drawing.Size(59, 13);
-            this.dateFromLabel.TabIndex = 6;
-            this.dateFromLabel.Text = "Date From:";
-            // 
-            // dateToLabel
-            // 
-            this.dateToLabel.AutoSize = true;
-            this.dateToLabel.ForeColor = System.Drawing.Color.White;
-            this.dateToLabel.Location = new System.Drawing.Point(24, 68);
-            this.dateToLabel.Name = "dateToLabel";
-            this.dateToLabel.Size = new System.Drawing.Size(49, 13);
-            this.dateToLabel.TabIndex = 7;
-            this.dateToLabel.Text = "Date To:";
+            this.noResultsText.AutoSize = true;
+            this.noResultsText.BackColor = System.Drawing.Color.Black;
+            this.noResultsText.Font = new System.Drawing.Font("monofur", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.noResultsText.ForeColor = System.Drawing.Color.White;
+            this.noResultsText.Location = new System.Drawing.Point(261, 135);
+            this.noResultsText.Name = "noResultsText";
+            this.noResultsText.Size = new System.Drawing.Size(467, 27);
+            this.noResultsText.TabIndex = 9;
+            this.noResultsText.Text = "No jiras match your search criteria";
+            this.noResultsText.Visible = false;
             // 
             // MainWindow
             // 
@@ -191,9 +223,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(989, 635);
+            this.Controls.Add(this.noResultsText);
+            this.Controls.Add(this.textLabel);
             this.Controls.Add(this.dateToLabel);
             this.Controls.Add(this.dateFromLabel);
-            this.Controls.Add(this.toDate);
+            this.Controls.Add(this.dateTo);
             this.Controls.Add(this.dateFrom);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.searchButton);
@@ -219,15 +253,17 @@
         private System.Windows.Forms.TextBox searchBox;
         private System.Windows.Forms.Button searchButton;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.DateTimePicker dateFrom;
+        private System.Windows.Forms.DateTimePicker dateTo;
+        private System.Windows.Forms.Label dateFromLabel;
+        private System.Windows.Forms.Label dateToLabel;
+        private System.Windows.Forms.Label textLabel;
         private System.Windows.Forms.DataGridViewTextBoxColumn OrderNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn JiraLink;
         private System.Windows.Forms.DataGridViewTextBoxColumn SummaryText;
         private System.Windows.Forms.DataGridViewTextBoxColumn DateCreated;
         private System.Windows.Forms.DataGridViewTextBoxColumn ClientName;
-        private System.Windows.Forms.DateTimePicker dateFrom;
-        private System.Windows.Forms.DateTimePicker toDate;
-        private System.Windows.Forms.Label dateFromLabel;
-        private System.Windows.Forms.Label dateToLabel;
+        private System.Windows.Forms.Label noResultsText;
     }
 }
 
