@@ -42,7 +42,7 @@ namespace UI
         {
             var mlcJiras = PerformSearchQuery();
             
-            jiraGrid.Rows.Clear();
+            ClearOutTheTable();
             if (mlcJiras.Count > 0)
             {
                 PopulateGridWithResults(mlcJiras);
@@ -51,6 +51,11 @@ namespace UI
             {
                 DisplayNoResultsMessage();
             }
+        }
+
+        private void ClearOutTheTable()
+        {
+            jiraGrid.Rows.Clear();
         }
 
         private List<Jira> PerformSearchQuery()
@@ -73,6 +78,11 @@ namespace UI
                 var jira = mlcJiras[index];
                 jiraGrid.Rows.Add(index, jira.Name, jira.Summary, jira.DateCreated, jira.Client);
             }
+        }
+
+        private void clearButton_Click(object sender, System.EventArgs e)
+        {
+            ClearOutTheTable();
         }
     }
 }

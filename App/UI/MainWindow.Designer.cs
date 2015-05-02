@@ -47,6 +47,7 @@
             this.DateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ClientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.noResultsText = new System.Windows.Forms.Label();
+            this.clearButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.jiraGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -92,7 +93,7 @@
             this.jiraGrid.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.jiraGrid.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
             this.jiraGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.jiraGrid.Size = new System.Drawing.Size(965, 537);
+            this.jiraGrid.Size = new System.Drawing.Size(965, 500);
             this.jiraGrid.TabIndex = 0;
             // 
             // searchBox
@@ -217,12 +218,23 @@
             this.noResultsText.Text = "No jiras match your search criteria";
             this.noResultsText.Visible = false;
             // 
+            // clearButton
+            // 
+            this.clearButton.Location = new System.Drawing.Point(892, 595);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(85, 23);
+            this.clearButton.TabIndex = 10;
+            this.clearButton.Text = "Clear Results";
+            this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(989, 635);
+            this.ClientSize = new System.Drawing.Size(989, 630);
+            this.Controls.Add(this.clearButton);
             this.Controls.Add(this.noResultsText);
             this.Controls.Add(this.textLabel);
             this.Controls.Add(this.dateToLabel);
@@ -234,7 +246,7 @@
             this.Controls.Add(this.searchBox);
             this.Controls.Add(this.jiraGrid);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(1005, 673);
+            this.MinimumSize = new System.Drawing.Size(1005, 668);
             this.Name = "MainWindow";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -264,6 +276,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn DateCreated;
         private System.Windows.Forms.DataGridViewTextBoxColumn ClientName;
         private System.Windows.Forms.Label noResultsText;
+        private System.Windows.Forms.Button clearButton;
     }
 }
 
