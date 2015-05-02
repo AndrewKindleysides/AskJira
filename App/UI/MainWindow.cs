@@ -15,7 +15,7 @@ namespace UI
             InitializeComponent();
         }
 
-        private void ShowScreen(ThreadStart screen)
+        private static void ShowScreen(ThreadStart screen)
         {
             var thread = new Thread(screen);
             thread.Start();
@@ -40,23 +40,38 @@ namespace UI
 
         private void searchButton_Click(object sender, System.EventArgs e)
         {
-            var jiraRequest = new JiraRequest(AppUser.AuthenticationToken());
-            var mlcJiras = jiraRequest.SearchMLCJiras(searchBox.Text, dateFrom.Value, dateTo.Value);
-
-            jiraGrid.Rows.Clear();
+            var mlcJiras = PerformSearchQuery();
             
+            jiraGrid.Rows.Clear();
             if (mlcJiras.Count > 0)
             {
-                noResultsText.Visible = false;
-                for (var index = 0; index < mlcJiras.Count; index++)
-                {
-                    var jira = mlcJiras[index];
-                    jiraGrid.Rows.Add(index, jira.Name, jira.Summary, jira.DateCreated, jira.Client);
-                }
+                PopulateGridWithResults(mlcJiras);
             }
             else
             {
-                noResultsText.Visible = true;
+                DisplayNoResultsMessage();
+            }
+        }
+
+        private List<Jira> PerformSearchQuery()
+        {
+            var jiraRequest = new JiraRequest(AppUser.AuthenticationToken());
+            var mlcJiras = jiraRequest.SearchMLCJiras(searchBox.Text, dateFrom.Value, dateTo.Value);
+            return mlcJiras;
+        }
+
+        private void DisplayNoResultsMessage()
+        {
+            noResultsText.Visible = true;
+        }
+
+        private void PopulateGridWithResults(IReadOnlyList<Jira> mlcJiras)
+        {
+            noResultsText.Visible = false;
+            for (var index = 0; index < mlcJiras.Count; index++)
+            {
+                var jira = mlcJiras[index];
+                jiraGrid.Rows.Add(index, jira.Name, jira.Summary, jira.DateCreated, jira.Client);
             }
         }
     }
