@@ -86,12 +86,14 @@
             this.jiraGrid.Name = "jiraGrid";
             this.jiraGrid.ReadOnly = true;
             this.jiraGrid.RowHeadersVisible = false;
+            this.jiraGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.Silver;
             this.jiraGrid.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.jiraGrid.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.jiraGrid.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
             this.jiraGrid.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.jiraGrid.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
+            this.jiraGrid.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.jiraGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.jiraGrid.Size = new System.Drawing.Size(965, 500);
             this.jiraGrid.TabIndex = 0;
