@@ -207,7 +207,7 @@
             // noResultsText
             // 
             this.noResultsText.AutoSize = true;
-            this.noResultsText.BackColor = System.Drawing.Color.Black;
+            this.noResultsText.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.noResultsText.Font = new System.Drawing.Font("monofur", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.noResultsText.ForeColor = System.Drawing.Color.White;
             this.noResultsText.Location = new System.Drawing.Point(261, 135);
