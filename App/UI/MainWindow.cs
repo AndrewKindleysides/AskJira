@@ -84,5 +84,14 @@ namespace UI
         {
             ClearOutTheTable();
         }
+
+        private void jiraGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 1)
+            {
+                var fileName = string.Format("https://jira.advancedcsg.com/browse/{0}", jiraGrid.CurrentCell.Value);
+                System.Diagnostics.Process.Start(fileName);
+            }
+        }
     }
 }
