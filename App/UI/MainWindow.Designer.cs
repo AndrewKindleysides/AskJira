@@ -48,6 +48,8 @@
             this.SummaryText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ClientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RaisedBy = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AssignedTo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.jiraGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -67,7 +69,7 @@
             this.jiraGrid.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Red;
@@ -79,7 +81,9 @@
             this.JiraLink,
             this.SummaryText,
             this.DateCreated,
-            this.ClientName});
+            this.ClientName,
+            this.RaisedBy,
+            this.AssignedTo});
             this.jiraGrid.EnableHeadersVisualStyles = false;
             this.jiraGrid.GridColor = System.Drawing.SystemColors.ActiveCaption;
             this.jiraGrid.Location = new System.Drawing.Point(12, 88);
@@ -179,17 +183,18 @@
             // 
             this.noResultsText.AutoSize = true;
             this.noResultsText.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.noResultsText.Font = new System.Drawing.Font("monofur", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.noResultsText.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.noResultsText.ForeColor = System.Drawing.Color.White;
-            this.noResultsText.Location = new System.Drawing.Point(261, 135);
+            this.noResultsText.Location = new System.Drawing.Point(278, 138);
             this.noResultsText.Name = "noResultsText";
-            this.noResultsText.Size = new System.Drawing.Size(467, 27);
+            this.noResultsText.Size = new System.Drawing.Size(425, 31);
             this.noResultsText.TabIndex = 9;
             this.noResultsText.Text = "No jiras match your search criteria";
             this.noResultsText.Visible = false;
             // 
             // clearButton
             // 
+            this.clearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.clearButton.Location = new System.Drawing.Point(892, 595);
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(85, 23);
@@ -205,7 +210,7 @@
             this.OrderNumber.Name = "OrderNumber";
             this.OrderNumber.ReadOnly = true;
             this.OrderNumber.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.OrderNumber.Width = 89;
+            this.OrderNumber.Width = 79;
             // 
             // JiraLink
             // 
@@ -232,6 +237,18 @@
             this.ClientName.HeaderText = "Client";
             this.ClientName.Name = "ClientName";
             this.ClientName.ReadOnly = true;
+            // 
+            // RaisedBy
+            // 
+            this.RaisedBy.HeaderText = "Raised By";
+            this.RaisedBy.Name = "RaisedBy";
+            this.RaisedBy.ReadOnly = true;
+            // 
+            // AssignedTo
+            // 
+            this.AssignedTo.HeaderText = "Assigned To";
+            this.AssignedTo.Name = "AssignedTo";
+            this.AssignedTo.ReadOnly = true;
             // 
             // MainWindow
             // 
@@ -282,6 +299,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn SummaryText;
         private System.Windows.Forms.DataGridViewTextBoxColumn DateCreated;
         private System.Windows.Forms.DataGridViewTextBoxColumn ClientName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RaisedBy;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AssignedTo;
     }
 }
 
