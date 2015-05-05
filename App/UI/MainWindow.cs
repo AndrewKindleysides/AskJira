@@ -74,7 +74,7 @@ namespace UI
 
         private List<Jira> PerformSearchQuery()
         {
-            var mlcJiras = _jiraRequest.SearchMLCJiras(searchBox.Text, dateFrom.Value, dateTo.Value, issueTypes.SelectedItem.ToString());
+            var mlcJiras = _jiraRequest.SearchMLCJiras(searchBox.Text, dateFrom.Value, dateTo.Value, issueTypes.SelectedItem.ToString(),clientName.Text);
             return mlcJiras;
         }
 
