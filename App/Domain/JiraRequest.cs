@@ -72,7 +72,8 @@ namespace Domain
                     Name = issue["key"].ToString(),
                     Summary = fields["summary"].ToString(),
                     DateCreated = fields["created"].ToObject<DateTime>(),
-                    Client = fields[Customfield] != null ? fields[Customfield].ToString(): "No Client Set"
+                    Client = fields[Customfield] != null ? fields[Customfield].ToString(): "No Client Set",
+                    Reporter = fields["reporter"]["displayName"].ToString()
                 }).ToList();
         }
 
@@ -135,5 +136,6 @@ namespace Domain
         public string Summary { get; set; }
         public DateTime DateCreated { get; set; }
         public string Client { get; set; }
+        public string Reporter { get; set; }
     }
 }
