@@ -33,6 +33,13 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.jiraGrid = new System.Windows.Forms.DataGridView();
+            this.OrderNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.JiraLink = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.SummaryText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ClientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RaisedBy = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AssignedTo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.searchBox = new System.Windows.Forms.TextBox();
             this.searchButton = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -43,13 +50,8 @@
             this.textLabel = new System.Windows.Forms.Label();
             this.noResultsText = new System.Windows.Forms.Label();
             this.clearButton = new System.Windows.Forms.Button();
-            this.OrderNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.JiraLink = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.SummaryText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ClientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RaisedBy = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AssignedTo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.issueTypes = new System.Windows.Forms.ComboBox();
+            this.issueTypeLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.jiraGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -102,6 +104,53 @@
             this.jiraGrid.Size = new System.Drawing.Size(965, 500);
             this.jiraGrid.TabIndex = 0;
             this.jiraGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.jiraGrid_CellContentClick);
+            // 
+            // OrderNumber
+            // 
+            this.OrderNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.OrderNumber.HeaderText = "Order";
+            this.OrderNumber.Name = "OrderNumber";
+            this.OrderNumber.ReadOnly = true;
+            this.OrderNumber.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.OrderNumber.Width = 79;
+            // 
+            // JiraLink
+            // 
+            this.JiraLink.HeaderText = "Jira";
+            this.JiraLink.Name = "JiraLink";
+            this.JiraLink.ReadOnly = true;
+            this.JiraLink.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.JiraLink.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // SummaryText
+            // 
+            this.SummaryText.HeaderText = "Summary";
+            this.SummaryText.Name = "SummaryText";
+            this.SummaryText.ReadOnly = true;
+            // 
+            // DateCreated
+            // 
+            this.DateCreated.HeaderText = "Date Created";
+            this.DateCreated.Name = "DateCreated";
+            this.DateCreated.ReadOnly = true;
+            // 
+            // ClientName
+            // 
+            this.ClientName.HeaderText = "Client";
+            this.ClientName.Name = "ClientName";
+            this.ClientName.ReadOnly = true;
+            // 
+            // RaisedBy
+            // 
+            this.RaisedBy.HeaderText = "Raised By";
+            this.RaisedBy.Name = "RaisedBy";
+            this.RaisedBy.ReadOnly = true;
+            // 
+            // AssignedTo
+            // 
+            this.AssignedTo.HeaderText = "Assigned To";
+            this.AssignedTo.Name = "AssignedTo";
+            this.AssignedTo.ReadOnly = true;
             // 
             // searchBox
             // 
@@ -203,52 +252,25 @@
             this.clearButton.UseVisualStyleBackColor = true;
             this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
             // 
-            // OrderNumber
+            // issueTypes
             // 
-            this.OrderNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.OrderNumber.HeaderText = "Order";
-            this.OrderNumber.Name = "OrderNumber";
-            this.OrderNumber.ReadOnly = true;
-            this.OrderNumber.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.OrderNumber.Width = 79;
+            this.issueTypes.FormattingEnabled = true;
+            this.issueTypes.Items.AddRange(new object[] {
+            "Any"});
+            this.issueTypes.Location = new System.Drawing.Point(246, 38);
+            this.issueTypes.Name = "issueTypes";
+            this.issueTypes.Size = new System.Drawing.Size(121, 21);
+            this.issueTypes.TabIndex = 11;
             // 
-            // JiraLink
+            // issueTypeLabel
             // 
-            this.JiraLink.HeaderText = "Jira";
-            this.JiraLink.Name = "JiraLink";
-            this.JiraLink.ReadOnly = true;
-            this.JiraLink.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.JiraLink.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // SummaryText
-            // 
-            this.SummaryText.HeaderText = "Summary";
-            this.SummaryText.Name = "SummaryText";
-            this.SummaryText.ReadOnly = true;
-            // 
-            // DateCreated
-            // 
-            this.DateCreated.HeaderText = "Date Created";
-            this.DateCreated.Name = "DateCreated";
-            this.DateCreated.ReadOnly = true;
-            // 
-            // ClientName
-            // 
-            this.ClientName.HeaderText = "Client";
-            this.ClientName.Name = "ClientName";
-            this.ClientName.ReadOnly = true;
-            // 
-            // RaisedBy
-            // 
-            this.RaisedBy.HeaderText = "Raised By";
-            this.RaisedBy.Name = "RaisedBy";
-            this.RaisedBy.ReadOnly = true;
-            // 
-            // AssignedTo
-            // 
-            this.AssignedTo.HeaderText = "Assigned To";
-            this.AssignedTo.Name = "AssignedTo";
-            this.AssignedTo.ReadOnly = true;
+            this.issueTypeLabel.AutoSize = true;
+            this.issueTypeLabel.ForeColor = System.Drawing.Color.White;
+            this.issueTypeLabel.Location = new System.Drawing.Point(178, 41);
+            this.issueTypeLabel.Name = "issueTypeLabel";
+            this.issueTypeLabel.Size = new System.Drawing.Size(62, 13);
+            this.issueTypeLabel.TabIndex = 12;
+            this.issueTypeLabel.Text = "Issue Type:";
             // 
             // MainWindow
             // 
@@ -256,6 +278,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(989, 630);
+            this.Controls.Add(this.issueTypeLabel);
+            this.Controls.Add(this.issueTypes);
             this.Controls.Add(this.clearButton);
             this.Controls.Add(this.noResultsText);
             this.Controls.Add(this.textLabel);
@@ -301,6 +325,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ClientName;
         private System.Windows.Forms.DataGridViewTextBoxColumn RaisedBy;
         private System.Windows.Forms.DataGridViewTextBoxColumn AssignedTo;
+        private System.Windows.Forms.ComboBox issueTypes;
+        private System.Windows.Forms.Label issueTypeLabel;
     }
 }
 

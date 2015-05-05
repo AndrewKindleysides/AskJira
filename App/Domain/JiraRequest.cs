@@ -97,15 +97,32 @@ namespace Domain
             return JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
         }
 
-        public List<Jira> SearchMLCJiras(string searchItem, DateTime dateFrom, DateTime dateTo)
+        public List<Jira> SearchMLCJiras(string searchItem, DateTime dateFrom, DateTime dateTo, string issueTypeName)
         {
-            var searchText = string.Format("(summary ~ '{0}' OR description ~ '{0}' OR comment ~ '{0}')", searchItem);
-            var dateRange = string.Format("created >= '{0}' AND created <= '{1}'", dateFrom.Date.ToString("yyyy-MM-dd h:mm").Replace('/', '-'), dateTo.Date.ToString("yyyy-MM-dd h:mm").Replace('/', '-'));
-            var address = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND {0} AND {1}", searchText, dateRange);
+            var searchText = "";
+            var issueType = "";
+            
+            if(!string.IsNullOrEmpty(searchItem))
+                searchText = string.Format("AND (summary ~ '{0}' OR description ~ '{0}' OR comment ~ '{0}')", searchItem);
+            
+            if(issueTypeName != "Any")
+                issueType = string.Format("AND issuetype = '{0}'",issueTypeName);
+
+            var dateRange = string.Format("AND (created >= '{0}' AND created <= '{1}')", dateFrom.Date.ToString("yyyy-MM-dd h:mm").Replace('/', '-'), dateTo.Date.ToString("yyyy-MM-dd h:mm").Replace('/', '-'));
+            
+            var address = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC {0} {1} {2}", searchText, dateRange, issueType);
             var response = _client.DownloadString(address);
             return GetJirasFromResult(response);
         }
- }
+
+        public List<string> IssueTypes()
+        {
+            var issueTypes = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/issuetype");
+            return JArray.Parse(issueTypes)
+                .Select(issue => issue["name"])
+                .Select(issueTypeName => (string) issueTypeName).ToList();
+        }
+    }
 
     public class Jira
     {

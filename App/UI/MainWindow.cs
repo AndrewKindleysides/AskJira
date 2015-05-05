@@ -8,6 +8,8 @@ namespace UI
     public partial class MainWindow : Form
     {
         public User AppUser;
+        private JiraRequest _jiraRequest;
+
         public MainWindow()
         {
             AppUser = new User();
@@ -36,6 +38,18 @@ namespace UI
                 AppUser.Username = loginScreen.Username;
                 AppUser.Password = loginScreen.Password;
             }
+            PopulateIssueTypesDropdown();
+        }
+
+        private void PopulateIssueTypesDropdown()
+        {
+            _jiraRequest = new JiraRequest(AppUser.AuthenticationToken());
+            var jiraIssueTypes = _jiraRequest.IssueTypes();
+            foreach (var issuetype in jiraIssueTypes)
+            {
+                issueTypes.Items.Add(issuetype);
+            }
+            issueTypes.SelectedIndex = 0;
         }
 
         private void searchButton_Click(object sender, System.EventArgs e)
@@ -60,8 +74,7 @@ namespace UI
 
         private List<Jira> PerformSearchQuery()
         {
-            var jiraRequest = new JiraRequest(AppUser.AuthenticationToken());
-            var mlcJiras = jiraRequest.SearchMLCJiras(searchBox.Text, dateFrom.Value, dateTo.Value);
+            var mlcJiras = _jiraRequest.SearchMLCJiras(searchBox.Text, dateFrom.Value, dateTo.Value, issueTypes.SelectedItem.ToString());
             return mlcJiras;
         }
 
