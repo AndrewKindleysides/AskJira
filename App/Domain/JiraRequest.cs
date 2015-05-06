@@ -65,16 +65,15 @@ namespace Domain
         {
             var issues = JObject.Parse(response)["issues"].ToObject<JArray>();
 
-            return (from issue in issues
-                let fields = issue["fields"]
-                select new Jira()
-                {
-                    Name = issue["key"].ToString(),
-                    Summary = fields["summary"].ToString(),
-                    DateCreated = fields["created"].ToObject<DateTime>(),
-                    Client = fields[Customfield] != null ? fields[Customfield].ToString(): "No Client Set",
-                    Reporter = fields["reporter"]["displayName"].ToString()
-                }).ToList();
+            return issues.Select(issue => new {issue, fields = issue["fields"]}).Select(@t => new Jira
+            {
+                Name = @t.issue["key"].ToString(),
+                Summary = @t.fields["summary"].ToString(),
+                DateCreated = @t.fields["created"].ToObject<DateTime>(),
+                Client = @t.fields[Customfield] != null ? @t.fields[Customfield].ToString() : "No Client Set",
+                Reporter = @t.fields["reporter"]["displayName"].ToString(),
+                Assignee = @t.fields["assignee"].ToString() != "" ? @t.fields["assignee"]["displayName"].ToString() : ""
+            }).ToList();
         }
 
         private IEnumerable<JToken> GetBatchOfJiras(int startAt)
@@ -137,5 +136,6 @@ namespace Domain
         public DateTime DateCreated { get; set; }
         public string Client { get; set; }
         public string Reporter { get; set; }
+        public string Assignee { get; set; }
     }
 }

@@ -89,7 +89,7 @@ namespace UI
             for (var index = 0; index < mlcJiras.Count; index++)
             {
                 var jira = mlcJiras[index];
-                jiraGrid.Rows.Add(index, jira.Name, jira.Summary, jira.DateCreated, jira.Client, jira.Reporter);
+                jiraGrid.Rows.Add(index, jira.Name, jira.Summary, jira.DateCreated, jira.Client, jira.Reporter, jira.Assignee);
             }
         }
 
