@@ -33,6 +33,13 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.jiraGrid = new System.Windows.Forms.DataGridView();
+            this.OrderNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.JiraLink = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.SummaryText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ClientNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RaisedBy = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AssignedTo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.searchBox = new System.Windows.Forms.TextBox();
             this.searchButton = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -47,13 +54,7 @@
             this.issueTypeLabel = new System.Windows.Forms.Label();
             this.clientName = new System.Windows.Forms.TextBox();
             this.clientNameLabel = new System.Windows.Forms.Label();
-            this.OrderNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.JiraLink = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.SummaryText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ClientNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RaisedBy = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AssignedTo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.componentDropdown = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.jiraGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -106,6 +107,53 @@
             this.jiraGrid.Size = new System.Drawing.Size(965, 500);
             this.jiraGrid.TabIndex = 0;
             this.jiraGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.jiraGrid_CellContentClick);
+            // 
+            // OrderNumber
+            // 
+            this.OrderNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.OrderNumber.HeaderText = "Order";
+            this.OrderNumber.Name = "OrderNumber";
+            this.OrderNumber.ReadOnly = true;
+            this.OrderNumber.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.OrderNumber.Width = 79;
+            // 
+            // JiraLink
+            // 
+            this.JiraLink.HeaderText = "Jira";
+            this.JiraLink.Name = "JiraLink";
+            this.JiraLink.ReadOnly = true;
+            this.JiraLink.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.JiraLink.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // SummaryText
+            // 
+            this.SummaryText.HeaderText = "Summary";
+            this.SummaryText.Name = "SummaryText";
+            this.SummaryText.ReadOnly = true;
+            // 
+            // DateCreated
+            // 
+            this.DateCreated.HeaderText = "Date Created";
+            this.DateCreated.Name = "DateCreated";
+            this.DateCreated.ReadOnly = true;
+            // 
+            // ClientNameColumn
+            // 
+            this.ClientNameColumn.HeaderText = "Client";
+            this.ClientNameColumn.Name = "ClientNameColumn";
+            this.ClientNameColumn.ReadOnly = true;
+            // 
+            // RaisedBy
+            // 
+            this.RaisedBy.HeaderText = "Raised By";
+            this.RaisedBy.Name = "RaisedBy";
+            this.RaisedBy.ReadOnly = true;
+            // 
+            // AssignedTo
+            // 
+            this.AssignedTo.HeaderText = "Assigned To";
+            this.AssignedTo.Name = "AssignedTo";
+            this.AssignedTo.ReadOnly = true;
             // 
             // searchBox
             // 
@@ -244,52 +292,13 @@
             this.clientNameLabel.TabIndex = 14;
             this.clientNameLabel.Text = "Client:";
             // 
-            // OrderNumber
+            // componentDropdown
             // 
-            this.OrderNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.OrderNumber.HeaderText = "Order";
-            this.OrderNumber.Name = "OrderNumber";
-            this.OrderNumber.ReadOnly = true;
-            this.OrderNumber.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.OrderNumber.Width = 79;
-            // 
-            // JiraLink
-            // 
-            this.JiraLink.HeaderText = "Jira";
-            this.JiraLink.Name = "JiraLink";
-            this.JiraLink.ReadOnly = true;
-            this.JiraLink.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.JiraLink.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // SummaryText
-            // 
-            this.SummaryText.HeaderText = "Summary";
-            this.SummaryText.Name = "SummaryText";
-            this.SummaryText.ReadOnly = true;
-            // 
-            // DateCreated
-            // 
-            this.DateCreated.HeaderText = "Date Created";
-            this.DateCreated.Name = "DateCreated";
-            this.DateCreated.ReadOnly = true;
-            // 
-            // ClientNameColumn
-            // 
-            this.ClientNameColumn.HeaderText = "Client";
-            this.ClientNameColumn.Name = "ClientNameColumn";
-            this.ClientNameColumn.ReadOnly = true;
-            // 
-            // RaisedBy
-            // 
-            this.RaisedBy.HeaderText = "Raised By";
-            this.RaisedBy.Name = "RaisedBy";
-            this.RaisedBy.ReadOnly = true;
-            // 
-            // AssignedTo
-            // 
-            this.AssignedTo.HeaderText = "Assigned To";
-            this.AssignedTo.Name = "AssignedTo";
-            this.AssignedTo.ReadOnly = true;
+            this.componentDropdown.FormattingEnabled = true;
+            this.componentDropdown.Location = new System.Drawing.Point(494, 38);
+            this.componentDropdown.Name = "componentDropdown";
+            this.componentDropdown.Size = new System.Drawing.Size(121, 21);
+            this.componentDropdown.TabIndex = 15;
             // 
             // MainWindow
             // 
@@ -297,6 +306,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(989, 630);
+            this.Controls.Add(this.componentDropdown);
             this.Controls.Add(this.clientNameLabel);
             this.Controls.Add(this.clientName);
             this.Controls.Add(this.issueTypeLabel);
@@ -350,6 +360,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ClientNameColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn RaisedBy;
         private System.Windows.Forms.DataGridViewTextBoxColumn AssignedTo;
+        private System.Windows.Forms.ComboBox componentDropdown;
     }
 }
 

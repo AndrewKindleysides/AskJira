@@ -9,6 +9,7 @@ namespace UI
     {
         public User AppUser;
         private JiraRequest _jiraRequest;
+        private Dictionary<string, string> _projectComponents;
 
         public MainWindow()
         {
@@ -38,12 +39,23 @@ namespace UI
                 AppUser.Username = loginScreen.Username;
                 AppUser.Password = loginScreen.Password;
             }
+            _jiraRequest = new JiraRequest(AppUser.AuthenticationToken());
             PopulateIssueTypesDropdown();
+            PopulateComponentDropdown();
+        }
+
+        private void PopulateComponentDropdown()
+        {
+            _projectComponents = _jiraRequest.Components();
+            foreach (var component in _projectComponents)
+            {
+                componentDropdown.Items.Add(component.Key);
+            }
+            issueTypes.SelectedIndex = 0;
         }
 
         private void PopulateIssueTypesDropdown()
         {
-            _jiraRequest = new JiraRequest(AppUser.AuthenticationToken());
             var jiraIssueTypes = _jiraRequest.IssueTypes();
             foreach (var issuetype in jiraIssueTypes)
             {
@@ -74,7 +86,8 @@ namespace UI
 
         private List<Jira> PerformSearchQuery()
         {
-            var mlcJiras = _jiraRequest.SearchMLCJiras(searchBox.Text, dateFrom.Value, dateTo.Value, issueTypes.SelectedItem.ToString(),clientName.Text);
+
+            var mlcJiras = _jiraRequest.SearchMLCJiras(searchBox.Text, dateFrom.Value, dateTo.Value, issueTypes.SelectedItem.ToString(),clientName.Text,_projectComponents[componentDropdown.Text]);
             return mlcJiras;
         }
 
