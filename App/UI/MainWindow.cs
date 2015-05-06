@@ -51,7 +51,7 @@ namespace UI
             {
                 componentDropdown.Items.Add(component.Key);
             }
-            issueTypes.SelectedIndex = 0;
+            componentDropdown.SelectedIndex = 0;
         }
 
         private void PopulateIssueTypesDropdown()

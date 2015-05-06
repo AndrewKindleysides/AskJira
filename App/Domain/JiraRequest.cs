@@ -97,12 +97,18 @@ namespace Domain
             return JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
         }
 
-        public List<Jira> SearchMLCJiras(string searchItem, DateTime dateFrom, DateTime dateTo, string issueTypeName, string clientName, string toString)
+        public List<Jira> SearchMLCJiras(string searchItem, DateTime dateFrom, DateTime dateTo, string issueTypeName, string clientName, string componentId)
         {
             var searchText = "";
             var issueType = "";
             var client = "";
-            
+            var component = "";
+
+
+
+            if (!string.IsNullOrEmpty(componentId))
+                component = string.Format("AND component = '{0}'", componentId);
+
             if(!string.IsNullOrEmpty(searchItem))
                 searchText = string.Format("AND (summary ~ '{0}' OR description ~ '{0}' OR comment ~ '{0}')", searchItem);
 
@@ -114,8 +120,8 @@ namespace Domain
                 issueType = string.Format("AND issuetype = '{0}'",issueTypeName);
 
             var dateRange = string.Format("AND (created >= '{0}' AND created <= '{1}')", dateFrom.Date.ToString("yyyy-MM-dd h:mm").Replace('/', '-'), dateTo.Date.ToString("yyyy-MM-dd h:mm").Replace('/', '-'));
-            
-            var address = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC {0} {1} {2} {3}", searchText, dateRange, issueType,client);
+
+            var address = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC {0} {1} {2} {3} {4}", searchText, dateRange, issueType, client, component);
             var response = _client.DownloadString(address);
             return GetJirasFromResult(response);
         }

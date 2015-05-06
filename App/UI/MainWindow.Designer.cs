@@ -55,6 +55,7 @@
             this.clientName = new System.Windows.Forms.TextBox();
             this.clientNameLabel = new System.Windows.Forms.Label();
             this.componentDropdown = new System.Windows.Forms.ComboBox();
+            this.componentLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.jiraGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -205,7 +206,7 @@
             // 
             this.dateFromLabel.AutoSize = true;
             this.dateFromLabel.ForeColor = System.Drawing.Color.White;
-            this.dateFromLabel.Location = new System.Drawing.Point(14, 44);
+            this.dateFromLabel.Location = new System.Drawing.Point(14, 43);
             this.dateFromLabel.Name = "dateFromLabel";
             this.dateFromLabel.Size = new System.Drawing.Size(59, 13);
             this.dateFromLabel.TabIndex = 6;
@@ -215,7 +216,7 @@
             // 
             this.dateToLabel.AutoSize = true;
             this.dateToLabel.ForeColor = System.Drawing.Color.White;
-            this.dateToLabel.Location = new System.Drawing.Point(24, 68);
+            this.dateToLabel.Location = new System.Drawing.Point(24, 65);
             this.dateToLabel.Name = "dateToLabel";
             this.dateToLabel.Size = new System.Drawing.Size(49, 13);
             this.dateToLabel.TabIndex = 7;
@@ -260,7 +261,7 @@
             this.issueTypes.FormattingEnabled = true;
             this.issueTypes.Items.AddRange(new object[] {
             "Any"});
-            this.issueTypes.Location = new System.Drawing.Point(246, 38);
+            this.issueTypes.Location = new System.Drawing.Point(525, 37);
             this.issueTypes.Name = "issueTypes";
             this.issueTypes.Size = new System.Drawing.Size(121, 21);
             this.issueTypes.TabIndex = 11;
@@ -269,7 +270,7 @@
             // 
             this.issueTypeLabel.AutoSize = true;
             this.issueTypeLabel.ForeColor = System.Drawing.Color.White;
-            this.issueTypeLabel.Location = new System.Drawing.Point(178, 41);
+            this.issueTypeLabel.Location = new System.Drawing.Point(457, 41);
             this.issueTypeLabel.Name = "issueTypeLabel";
             this.issueTypeLabel.Size = new System.Drawing.Size(62, 13);
             this.issueTypeLabel.TabIndex = 12;
@@ -295,10 +296,20 @@
             // componentDropdown
             // 
             this.componentDropdown.FormattingEnabled = true;
-            this.componentDropdown.Location = new System.Drawing.Point(494, 38);
+            this.componentDropdown.Location = new System.Drawing.Point(246, 38);
             this.componentDropdown.Name = "componentDropdown";
-            this.componentDropdown.Size = new System.Drawing.Size(121, 21);
+            this.componentDropdown.Size = new System.Drawing.Size(187, 21);
             this.componentDropdown.TabIndex = 15;
+            // 
+            // componentLabel
+            // 
+            this.componentLabel.AutoSize = true;
+            this.componentLabel.ForeColor = System.Drawing.Color.White;
+            this.componentLabel.Location = new System.Drawing.Point(176, 41);
+            this.componentLabel.Name = "componentLabel";
+            this.componentLabel.Size = new System.Drawing.Size(64, 13);
+            this.componentLabel.TabIndex = 16;
+            this.componentLabel.Text = "Component:";
             // 
             // MainWindow
             // 
@@ -306,6 +317,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(989, 630);
+            this.Controls.Add(this.componentLabel);
             this.Controls.Add(this.componentDropdown);
             this.Controls.Add(this.clientNameLabel);
             this.Controls.Add(this.clientName);
@@ -361,6 +373,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn RaisedBy;
         private System.Windows.Forms.DataGridViewTextBoxColumn AssignedTo;
         private System.Windows.Forms.ComboBox componentDropdown;
+        private System.Windows.Forms.Label componentLabel;
     }
 }
 
