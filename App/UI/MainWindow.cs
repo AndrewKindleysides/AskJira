@@ -82,9 +82,7 @@ namespace UI
 
         private List<Jira> PerformSearchQuery()
         {
-
-            var mlcJiras = _jiraRequest.SearchMLCJiras(searchBox.Text, dateFrom.Value, dateTo.Value, issueTypes.SelectedItem.ToString(),clientName.Text,GetComponentId());
-            return mlcJiras;
+            return _jiraRequest.SearchMLCJiras(searchBox.Text, dateFrom.Value, dateTo.Value, issueTypes.SelectedItem.ToString(),clientName.Text,GetComponentId());
         }
 
         private int GetComponentId()
