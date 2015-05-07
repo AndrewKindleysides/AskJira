@@ -97,7 +97,7 @@ namespace Domain
             return JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
         }
 
-        public List<Jira> SearchMLCJiras(string searchItem, DateTime dateFrom, DateTime dateTo, string issueTypeName, string clientName, string componentId)
+        public List<Jira> SearchMLCJiras(string searchItem, DateTime dateFrom, DateTime dateTo, string issueTypeName, string clientName, int componentId)
         {
             var searchText = "";
             var issueType = "";
@@ -134,16 +134,16 @@ namespace Domain
                 .Select(issueTypeName => (string) issueTypeName).ToList();
         }
 
-        public Dictionary<string, string> Components()
+        public Dictionary<int, string> Components()
         {
             var issueTypes = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/project/LCSMLC");
             var array = JObject.Parse(issueTypes)["components"].ToList();
 
-            var components = new Dictionary<string, string>();
+            var components = new Dictionary<int, string>();
 
             foreach (var component in array)
             {
-                components.Add(component["name"].ToString(),component["id"].ToString());
+                components.Add(component["id"].ToObject<int>(),component["name"].ToString());
             }
             return components;
         }

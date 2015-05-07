@@ -9,7 +9,6 @@ namespace UI
     {
         public User AppUser;
         private JiraRequest _jiraRequest;
-        private Dictionary<string, string> _projectComponents;
 
         public MainWindow()
         {
@@ -46,12 +45,9 @@ namespace UI
 
         private void PopulateComponentDropdown()
         {
-            _projectComponents = _jiraRequest.Components();
-            foreach (var component in _projectComponents)
-            {
-                componentDropdown.Items.Add(component.Key);
-            }
-            componentDropdown.SelectedIndex = 0;
+            componentDropdown.DataSource = new BindingSource(_jiraRequest.Components(), null);
+            componentDropdown.DisplayMember = "Value";
+            componentDropdown.ValueMember = "Key";
         }
 
         private void PopulateIssueTypesDropdown()
@@ -87,8 +83,13 @@ namespace UI
         private List<Jira> PerformSearchQuery()
         {
 
-            var mlcJiras = _jiraRequest.SearchMLCJiras(searchBox.Text, dateFrom.Value, dateTo.Value, issueTypes.SelectedItem.ToString(),clientName.Text,_projectComponents[componentDropdown.Text]);
+            var mlcJiras = _jiraRequest.SearchMLCJiras(searchBox.Text, dateFrom.Value, dateTo.Value, issueTypes.SelectedItem.ToString(),clientName.Text,GetComponentId());
             return mlcJiras;
+        }
+
+        private int GetComponentId()
+        {
+            return ((KeyValuePair<int,string>)componentDropdown.SelectedItem).Key;
         }
 
         private void DisplayNoResultsMessage()
