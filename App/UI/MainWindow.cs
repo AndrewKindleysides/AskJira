@@ -41,6 +41,14 @@ namespace UI
             _jiraRequest = new JiraRequest(AppUser.AuthenticationToken());
             PopulateIssueTypesDropdown();
             PopulateComponentDropdown();
+            PopulateFixVersionDropdown();
+        }
+
+        private void PopulateFixVersionDropdown()
+        {
+            fixVersionDropdown.DataSource = new BindingSource(_jiraRequest.Versions(), null);
+            fixVersionDropdown.DisplayMember = "Value";
+            fixVersionDropdown.ValueMember = "Key";
         }
 
         private void PopulateComponentDropdown()
@@ -82,12 +90,12 @@ namespace UI
 
         private List<Jira> PerformSearchQuery()
         {
-            return _jiraRequest.SearchMLCJiras(searchBox.Text, dateFrom.Value, dateTo.Value, issueTypes.SelectedItem.ToString(),clientName.Text,GetComponentId());
+            return _jiraRequest.SearchMLCJiras(searchBox.Text, dateFrom.Value, dateTo.Value, issueTypes.SelectedItem.ToString(), clientName.Text, GetIdFromDropdown(componentDropdown.SelectedItem), GetIdFromDropdown(fixVersionDropdown.SelectedItem));
         }
 
-        private int GetComponentId()
+        private string GetIdFromDropdown(object dropdown)
         {
-            return ((KeyValuePair<int,string>)componentDropdown.SelectedItem).Key;
+            return ((KeyValuePair<int,string>)dropdown).Key.ToString();
         }
 
         private void DisplayNoResultsMessage()

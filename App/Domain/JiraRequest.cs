@@ -97,14 +97,16 @@ namespace Domain
             return JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
         }
 
-        public List<Jira> SearchMLCJiras(string searchItem, DateTime dateFrom, DateTime dateTo, string issueTypeName, string clientName, int componentId)
+        public List<Jira> SearchMLCJiras(string searchItem, DateTime dateFrom, DateTime dateTo, string issueTypeName, string clientName, string componentId, string fixVersionId)
         {
             var searchText = "";
             var issueType = "";
             var client = "";
             var component = "";
+            var version = "";
 
-
+            if (!string.IsNullOrEmpty(fixVersionId))
+                version = string.Format("AND FixVersion = '{0}'", fixVersionId);
 
             if (!string.IsNullOrEmpty(componentId))
                 component = string.Format("AND component = '{0}'", componentId);
@@ -121,7 +123,7 @@ namespace Domain
 
             var dateRange = string.Format("AND (created >= '{0}' AND created <= '{1}')", dateFrom.Date.ToString("yyyy-MM-dd h:mm").Replace('/', '-'), dateTo.Date.ToString("yyyy-MM-dd h:mm").Replace('/', '-'));
 
-            var address = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC {0} {1} {2} {3} {4}", searchText, dateRange, issueType, client, component);
+            var address = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC {0} {1} {2} {3} {4} {5}", searchText, dateRange, issueType, client, component, version);
             var response = _client.DownloadString(address);
             return GetJirasFromResult(response);
         }
@@ -146,6 +148,20 @@ namespace Domain
                 components.Add(component["id"].ToObject<int>(),component["name"].ToString());
             }
             return components;
+        }
+
+        public Dictionary<int, string> Versions()
+        {
+            var issueTypes = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/project/LCSMLC");
+            var array = JObject.Parse(issueTypes)["versions"].ToList();
+
+            var versions = new Dictionary<int, string>();
+
+            foreach (var component in array)
+            {
+                versions.Add(component["id"].ToObject<int>(),component["name"].ToString());
+            }
+            return versions;
         }
     }
 

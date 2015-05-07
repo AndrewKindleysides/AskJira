@@ -56,6 +56,8 @@
             this.clientNameLabel = new System.Windows.Forms.Label();
             this.componentDropdown = new System.Windows.Forms.ComboBox();
             this.componentLabel = new System.Windows.Forms.Label();
+            this.fixVersionLabel = new System.Windows.Forms.Label();
+            this.fixVersionDropdown = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.jiraGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -311,12 +313,32 @@
             this.componentLabel.TabIndex = 16;
             this.componentLabel.Text = "Component:";
             // 
+            // fixVersionLabel
+            // 
+            this.fixVersionLabel.AutoSize = true;
+            this.fixVersionLabel.ForeColor = System.Drawing.Color.White;
+            this.fixVersionLabel.Location = new System.Drawing.Point(457, 65);
+            this.fixVersionLabel.Name = "fixVersionLabel";
+            this.fixVersionLabel.Size = new System.Drawing.Size(64, 13);
+            this.fixVersionLabel.TabIndex = 17;
+            this.fixVersionLabel.Text = "Fix Version: ";
+            // 
+            // fixVersionDropdown
+            // 
+            this.fixVersionDropdown.FormattingEnabled = true;
+            this.fixVersionDropdown.Location = new System.Drawing.Point(525, 60);
+            this.fixVersionDropdown.Name = "fixVersionDropdown";
+            this.fixVersionDropdown.Size = new System.Drawing.Size(121, 21);
+            this.fixVersionDropdown.TabIndex = 18;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(989, 630);
+            this.Controls.Add(this.fixVersionDropdown);
+            this.Controls.Add(this.fixVersionLabel);
             this.Controls.Add(this.componentLabel);
             this.Controls.Add(this.componentDropdown);
             this.Controls.Add(this.clientNameLabel);
@@ -374,6 +396,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn AssignedTo;
         private System.Windows.Forms.ComboBox componentDropdown;
         private System.Windows.Forms.Label componentLabel;
+        private System.Windows.Forms.Label fixVersionLabel;
+        private System.Windows.Forms.ComboBox fixVersionDropdown;
     }
 }
 
