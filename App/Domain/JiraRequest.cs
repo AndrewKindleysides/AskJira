@@ -105,10 +105,10 @@ namespace Domain
             var component = "";
             var version = "";
 
-            if (!string.IsNullOrEmpty(fixVersionId))
+            if (!string.IsNullOrEmpty(fixVersionId) && fixVersionId != "0")
                 version = string.Format("AND FixVersion = '{0}'", fixVersionId);
 
-            if (!string.IsNullOrEmpty(componentId))
+            if (!string.IsNullOrEmpty(componentId) && componentId != "0")
                 component = string.Format("AND component = '{0}'", componentId);
 
             if(!string.IsNullOrEmpty(searchItem))
@@ -116,7 +116,6 @@ namespace Domain
 
             if (!string.IsNullOrEmpty(clientName))
                 client = string.Format("AND cf[10200]~'{0}'", clientName);
-
 
             if(issueTypeName != "Any")
                 issueType = string.Format("AND issuetype = '{0}'",issueTypeName);
@@ -131,9 +130,10 @@ namespace Domain
         public List<string> IssueTypes()
         {
             var issueTypes = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/issuetype");
-            return JArray.Parse(issueTypes)
+            var types = JArray.Parse(issueTypes)
                 .Select(issue => issue["name"])
                 .Select(issueTypeName => (string) issueTypeName).ToList();
+            return types;
         }
 
         public Dictionary<int, string> Components()
@@ -141,8 +141,7 @@ namespace Domain
             var issueTypes = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/project/LCSMLC");
             var array = JObject.Parse(issueTypes)["components"].ToList();
 
-            var components = new Dictionary<int, string>();
-
+            var components = new Dictionary<int, string> {{0, "Any"}};
             foreach (var component in array)
             {
                 components.Add(component["id"].ToObject<int>(),component["name"].ToString());
@@ -155,7 +154,7 @@ namespace Domain
             var issueTypes = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/project/LCSMLC");
             var array = JObject.Parse(issueTypes)["versions"].ToList();
 
-            var versions = new Dictionary<int, string>();
+            var versions = new Dictionary<int, string>() { { 0, "Any" } };
 
             foreach (var component in array)
             {
