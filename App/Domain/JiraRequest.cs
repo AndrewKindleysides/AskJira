@@ -99,24 +99,23 @@ namespace Domain
 
         public List<Jira> SearchMLCJiras(string searchItem, DateTime dateFrom, DateTime dateTo, string issueTypeName, string clientName, string componentId, string fixVersionId)
         {
-            var searchText = "";
-            var issueType = "";
-            var client = "";
-            var component = "";
             var version = "";
-
             if (!string.IsNullOrEmpty(fixVersionId) && fixVersionId != "0")
                 version = string.Format("AND FixVersion = '{0}'", fixVersionId);
 
+            var component = "";
             if (!string.IsNullOrEmpty(componentId) && componentId != "0")
-                component = string.Format("AND component = '{0}'", componentId);
+                component = string.Format("AND Component = '{0}'", componentId);
 
+            var searchText = "";
             if(!string.IsNullOrEmpty(searchItem))
                 searchText = string.Format("AND (summary ~ '{0}' OR description ~ '{0}' OR comment ~ '{0}')", searchItem);
 
+            var client = "";
             if (!string.IsNullOrEmpty(clientName))
                 client = string.Format("AND cf[10200]~'{0}'", clientName);
 
+            var issueType = "";
             if(issueTypeName != "Any")
                 issueType = string.Format("AND issuetype = '{0}'",issueTypeName);
 
