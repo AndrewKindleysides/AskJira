@@ -48,11 +48,13 @@
     <Compile Include="AskJira.cs" />
     <Compile Include="JiraRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryBuilder.cs" />
     <Compile Include="Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="SearchItem.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
