@@ -90,7 +90,14 @@ namespace UI
 
         private List<Jira> PerformSearchQuery()
         {
-            return _jiraRequest.SearchMLCJiras(searchBox.Text, dateFrom.Value, dateTo.Value, issueTypes.SelectedItem.ToString(), clientName.Text, GetIdFromDropdown(componentDropdown.SelectedItem), GetIdFromDropdown(fixVersionDropdown.SelectedItem));
+            return _jiraRequest.SearchMLCJiras(new SearchItem(dateFrom.Value, dateTo.Value)
+            {
+                Client = clientName.Text,
+                Component =  GetIdFromDropdown(componentDropdown.SelectedItem),
+                Version = GetIdFromDropdown(fixVersionDropdown.SelectedItem),
+                IssueType = issueTypes.SelectedItem.ToString(),
+                SearchText = searchBox.Text
+            });
         }
 
         private string GetIdFromDropdown(object dropdown)

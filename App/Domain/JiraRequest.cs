@@ -97,16 +97,9 @@ namespace Domain
             return JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
         }
 
-        public List<Jira> SearchMLCJiras(string searchItem, DateTime dateFrom, DateTime dateTo, string issueTypeName, string clientName, string componentId, string fixVersionId)
+        public List<Jira> SearchMLCJiras(SearchItem searchItem)
         {
-            var query = new QueryBuilder().Build(new SearchItem(dateFrom, dateTo)
-            {
-                Client = clientName,
-                Component = componentId,
-                Version = fixVersionId,
-                IssueType = issueTypeName,
-                SearchText = searchItem
-            });
+            var query = new QueryBuilder().Build(searchItem);
 
             return GetJirasFromResult(_client.DownloadString(query));
         }
