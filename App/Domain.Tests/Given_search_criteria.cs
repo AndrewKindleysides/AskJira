@@ -32,6 +32,20 @@ namespace Domain.Tests
 
             Assert.Equal(expected, actual);
         }
+
+        [Fact]
+        public void search_issue_type()
+        {
+            var date = DateTime.Parse("4/4/2015");
+
+            var dateFrom = date.AddDays(-2).Date;
+            var dateTo = date.Date;
+
+            var expected = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND issuetype = 'issue type A'");
+            var actual = new QueryBuilder().Build(dateFrom, dateTo,"","issue type A");
+
+            Assert.Equal(expected, actual);
+        }
     }
 
     public class QueryBuilder
