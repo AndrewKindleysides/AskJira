@@ -5,30 +5,29 @@ namespace Domain.Tests
 {
     public class Search_for_all_issues_by_date
     {
-        private readonly DateTime _dateFrom;
-        private readonly DateTime _dateTo;
+        private readonly SearchItem _searchItem;
 
         public Search_for_all_issues_by_date()
         {
             var date = DateTime.Parse("4/4/2015");
-            _dateFrom = date.AddDays(-2).Date;
-            _dateTo = date.Date;
+            _searchItem = new SearchItem(date.AddDays(-2).Date, date.Date);
         }
 
         [Fact]
         public void Default_search_values_search_for_just_the_date()
         {
             var expected = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00')");
-            var actual = new QueryBuilder().Build(_dateFrom, _dateTo);
-            
-            Assert.Equal(expected,actual);
+            var actual = new QueryBuilder().Build(_searchItem);
+
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void search_text_values()
         {
             var expected = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND (summary ~ 'search for this' OR description ~ 'search for this' OR comment ~ 'search for this')");
-            var actual = new QueryBuilder().Build(_dateFrom, _dateTo,"search for this");
+            _searchItem.SearchText = "search for this";
+            var actual = new QueryBuilder().Build(_searchItem);
 
             Assert.Equal(expected, actual);
         }
@@ -37,7 +36,8 @@ namespace Domain.Tests
         public void search_issue_type()
         {
             var expected = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND issuetype = 'issue type A'");
-            var actual = new QueryBuilder().Build(_dateFrom, _dateTo,"","issue type A");
+            _searchItem.IssueType = "issue type A";
+            var actual = new QueryBuilder().Build(_searchItem);
 
             Assert.Equal(expected, actual);
         }
@@ -46,7 +46,8 @@ namespace Domain.Tests
         public void search_client()
         {
             var expected = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND cf[10200]~'client name'");
-            var actual = new QueryBuilder().Build(_dateFrom, _dateTo, null, "Any","client name");
+            _searchItem.Client = "client name";
+            var actual = new QueryBuilder().Build(_searchItem);
 
             Assert.Equal(expected, actual);
         }
@@ -55,7 +56,8 @@ namespace Domain.Tests
         public void search_component()
         {
             var expected = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND Component = 'component Id'");
-            var actual = new QueryBuilder().Build(_dateFrom, _dateTo, null, "Any", "", "component Id");
+            _searchItem.Component = "component Id";
+            var actual = new QueryBuilder().Build(_searchItem);
 
             Assert.Equal(expected, actual);
         }
@@ -64,39 +66,65 @@ namespace Domain.Tests
         public void search_fix_version()
         {
             var expected = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND FixVersion = 'version Id'");
-            var actual = new QueryBuilder().Build(_dateFrom, _dateTo, null, "Any", "", "0","version Id");
+            _searchItem.Version = "version Id";
+            var actual = new QueryBuilder().Build(_searchItem);
 
             Assert.Equal(expected, actual);
         }
     }
 
+    public class SearchItem
+    {
+        public DateTime DateFrom;
+        public DateTime DateTo;
+        public string SearchText;
+        public string IssueType;
+        public string Client;
+        public string Component;
+        public string Version;
+
+        public SearchItem(DateTime dateFrom, DateTime dateTo)
+        {
+            DateFrom = dateFrom;
+            DateTo = dateTo;
+            SearchText = "";
+            IssueType = "Any";
+            Client = "";
+            Component = "0";
+            Version = "0";
+        }
+    }
+
     public class QueryBuilder
     {
-        public string Build(DateTime dateFrom, DateTime dateTo, string searchText = "", string issueType = "Any", string client = "", string component = "0", string version = "0")
+        public string Build(SearchItem searchItem)
         {
-            var v = "";
-            if (!string.IsNullOrEmpty(version) && version != "0")
-                v = string.Format(" AND FixVersion = '{0}'", version);
+            var queryString = string.Format(
+                    "https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '{0}' AND created <= '{1}')",
+                    FormatTheDate(searchItem.DateFrom),
+                    FormatTheDate(searchItem.DateTo));
 
-            var c = "";
-            if (!string.IsNullOrEmpty(component) && component != "0")
-                c = string.Format(" AND Component = '{0}'", component);
+            if (searchItem.Version != "0")
+                queryString += string.Format(" AND FixVersion = '{0}'", searchItem.Version);
 
-            var s = "";
-            if (!string.IsNullOrEmpty(searchText))
-                s = string.Format(" AND (summary ~ '{0}' OR description ~ '{0}' OR comment ~ '{0}')", searchText);
+            if (searchItem.Component != "0")
+                queryString += string.Format(" AND Component = '{0}'", searchItem.Component);
 
-            var cl = "";
-            if (!string.IsNullOrEmpty(client))
-                cl = string.Format(" AND cf[10200]~'{0}'", client);
+            if (searchItem.SearchText != "")
+                queryString += string.Format(" AND (summary ~ '{0}' OR description ~ '{0}' OR comment ~ '{0}')", searchItem.SearchText);
 
-            var i = "";
-            if (issueType != "Any")
-                i = string.Format(" AND issuetype = '{0}'", issueType);
+            if (searchItem.Client != "")
+                queryString += string.Format(" AND cf[10200]~'{0}'", searchItem.Client);
 
-            var dateRange = string.Format(" AND (created >= '{0}' AND created <= '{1}')", dateFrom.Date.ToString("yyyy-MM-dd h:mm").Replace('/', '-'), dateTo.Date.ToString("yyyy-MM-dd h:mm").Replace('/', '-'));
-            
-            return string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC{0}{1}{2}{3}{4}{5}",dateRange, s, v, c, cl, i);
+            if (searchItem.IssueType != "Any")
+                queryString += string.Format(" AND issuetype = '{0}'", searchItem.IssueType);
+
+            return queryString;
+        }
+
+        private string FormatTheDate(DateTime date)
+        {
+            return date.Date.ToString("yyyy-MM-dd h:mm").Replace('/', '-');
         }
     }
 }
