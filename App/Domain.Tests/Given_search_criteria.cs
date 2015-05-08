@@ -3,19 +3,34 @@ using Xunit;
 
 namespace Domain.Tests
 {
-    public class Given_search_criteria
+    public class Search_for_all_issues_by_date
     {
         [Fact]
         public void Default_search_values_search_for_just_the_date()
         {
-            var date = DateTime.Parse("4/4/2015 00:00");
+            var date = DateTime.Parse("4/4/2015");
 
             var dateFrom = date.AddDays(-2).Date;
             var dateTo = date.Date;
-            var expected = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLCAND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00')");
+
+            var expected = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00')");
             var actual = new QueryBuilder().Build(dateFrom, dateTo);
             
             Assert.Equal(expected,actual);
+        }
+
+        [Fact]
+        public void search_text_values()
+        {
+            var date = DateTime.Parse("4/4/2015");
+
+            var dateFrom = date.AddDays(-2).Date;
+            var dateTo = date.Date;
+
+            var expected = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND (summary ~ 'search for this' OR description ~ 'search for this' OR comment ~ 'search for this')");
+            var actual = new QueryBuilder().Build(dateFrom, dateTo,"search for this");
+
+            Assert.Equal(expected, actual);
         }
     }
 
@@ -37,15 +52,15 @@ namespace Domain.Tests
 
             var cl = "";
             if (!string.IsNullOrEmpty(client))
-                client = string.Format(" AND cf[10200]~'{0}'", client);
+                cl = string.Format(" AND cf[10200]~'{0}'", client);
 
             var i = "";
             if (issueType != "Any")
                 i = string.Format(" AND issuetype = '{0}'", issueType);
 
-            var dateRange = string.Format("AND (created >= '{0}' AND created <= '{1}')", dateFrom.Date.ToString("yyyy-MM-dd h:mm").Replace('/', '-'), dateTo.Date.ToString("yyyy-MM-dd h:mm").Replace('/', '-'));
+            var dateRange = string.Format(" AND (created >= '{0}' AND created <= '{1}')", dateFrom.Date.ToString("yyyy-MM-dd h:mm").Replace('/', '-'), dateTo.Date.ToString("yyyy-MM-dd h:mm").Replace('/', '-'));
             
-            return string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC{0}{1}{2}{3}{4}{5}", s, dateRange, v, c, client, i);
+            return string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC{0}{1}{2}{3}{4}{5}",dateRange, s, v, c, cl, i);
         }
     }
 }
