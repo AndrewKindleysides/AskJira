@@ -5,16 +5,21 @@ namespace Domain.Tests
 {
     public class Search_for_all_issues_by_date
     {
+        private readonly DateTime _dateFrom;
+        private readonly DateTime _dateTo;
+
+        public Search_for_all_issues_by_date()
+        {
+            var date = DateTime.Parse("4/4/2015");
+            _dateFrom = date.AddDays(-2).Date;
+            _dateTo = date.Date;
+        }
+
         [Fact]
         public void Default_search_values_search_for_just_the_date()
         {
-            var date = DateTime.Parse("4/4/2015");
-
-            var dateFrom = date.AddDays(-2).Date;
-            var dateTo = date.Date;
-
             var expected = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00')");
-            var actual = new QueryBuilder().Build(dateFrom, dateTo);
+            var actual = new QueryBuilder().Build(_dateFrom, _dateTo);
             
             Assert.Equal(expected,actual);
         }
@@ -22,13 +27,8 @@ namespace Domain.Tests
         [Fact]
         public void search_text_values()
         {
-            var date = DateTime.Parse("4/4/2015");
-
-            var dateFrom = date.AddDays(-2).Date;
-            var dateTo = date.Date;
-
             var expected = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND (summary ~ 'search for this' OR description ~ 'search for this' OR comment ~ 'search for this')");
-            var actual = new QueryBuilder().Build(dateFrom, dateTo,"search for this");
+            var actual = new QueryBuilder().Build(_dateFrom, _dateTo,"search for this");
 
             Assert.Equal(expected, actual);
         }
@@ -36,13 +36,8 @@ namespace Domain.Tests
         [Fact]
         public void search_issue_type()
         {
-            var date = DateTime.Parse("4/4/2015");
-
-            var dateFrom = date.AddDays(-2).Date;
-            var dateTo = date.Date;
-
             var expected = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND issuetype = 'issue type A'");
-            var actual = new QueryBuilder().Build(dateFrom, dateTo,"","issue type A");
+            var actual = new QueryBuilder().Build(_dateFrom, _dateTo,"","issue type A");
 
             Assert.Equal(expected, actual);
         }
@@ -50,13 +45,8 @@ namespace Domain.Tests
         [Fact]
         public void search_client()
         {
-            var date = DateTime.Parse("4/4/2015");
-
-            var dateFrom = date.AddDays(-2).Date;
-            var dateTo = date.Date;
-
             var expected = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND cf[10200]~'client name'");
-            var actual = new QueryBuilder().Build(dateFrom, dateTo, null, "Any","client name");
+            var actual = new QueryBuilder().Build(_dateFrom, _dateTo, null, "Any","client name");
 
             Assert.Equal(expected, actual);
         }
@@ -64,13 +54,8 @@ namespace Domain.Tests
         [Fact]
         public void search_component()
         {
-            var date = DateTime.Parse("4/4/2015");
-
-            var dateFrom = date.AddDays(-2).Date;
-            var dateTo = date.Date;
-
             var expected = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND Component = 'component Id'");
-            var actual = new QueryBuilder().Build(dateFrom, dateTo, null, "Any", "", "component Id");
+            var actual = new QueryBuilder().Build(_dateFrom, _dateTo, null, "Any", "", "component Id");
 
             Assert.Equal(expected, actual);
         }
@@ -78,13 +63,8 @@ namespace Domain.Tests
         [Fact]
         public void search_fix_version()
         {
-            var date = DateTime.Parse("4/4/2015");
-
-            var dateFrom = date.AddDays(-2).Date;
-            var dateTo = date.Date;
-
             var expected = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND FixVersion = 'version Id'");
-            var actual = new QueryBuilder().Build(dateFrom, dateTo, null, "Any", "", "0","version Id");
+            var actual = new QueryBuilder().Build(_dateFrom, _dateTo, null, "Any", "", "0","version Id");
 
             Assert.Equal(expected, actual);
         }
