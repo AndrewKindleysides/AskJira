@@ -11,8 +11,8 @@ namespace Domain
         {
             return Base64Encode(string.Format("{0}:{1}", Username, Password));
         }
-        
-        private string Base64Encode(string plainText)
+
+        public string Base64Encode(string plainText)
         {
             return Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(plainText));
         }

@@ -24,7 +24,7 @@ namespace App
         public string GetAuthenticationToken()
         {
             Login();
-            return _user.AuthenticationToken();
+            return _user.Base64Encode(string.Format("{0}:{1}", _user.Username, _user.Password));
         }
 
         

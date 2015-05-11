@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationConfig.cs" />
-    <Compile Include="AskJira.cs" />
+    <Compile Include="T3Alarm.cs" />
     <Compile Include="JiraRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryBuilder.cs" />

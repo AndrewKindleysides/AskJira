@@ -7,7 +7,7 @@ namespace App
         public static void Main(string[] args)
         {
             var jiraRequest = new JiraRequest(new UserLogin(new User()).GetAuthenticationToken());
-            new AskJira().Start(jiraRequest.MLCT3AwaitingTriage);
+            new T3Alarm().Start(jiraRequest.MLCT3AwaitingTriage);
         }
     }
 }
