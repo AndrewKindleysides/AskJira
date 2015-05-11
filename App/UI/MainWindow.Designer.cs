@@ -60,6 +60,9 @@
             this.fixVersionDropdown = new System.Windows.Forms.ComboBox();
             this.totalLabel = new System.Windows.Forms.Label();
             this.jiraSearchResultTotal = new System.Windows.Forms.Label();
+            this.currentPage = new System.Windows.Forms.Label();
+            this.nextPageButton = new System.Windows.Forms.Button();
+            this.previousPageButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.jiraGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -356,12 +359,46 @@
             this.jiraSearchResultTotal.Text = "0";
             this.jiraSearchResultTotal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // currentPage
+            // 
+            this.currentPage.AutoSize = true;
+            this.currentPage.BackColor = System.Drawing.Color.Black;
+            this.currentPage.ForeColor = System.Drawing.Color.White;
+            this.currentPage.Location = new System.Drawing.Point(622, 600);
+            this.currentPage.Name = "currentPage";
+            this.currentPage.Size = new System.Drawing.Size(13, 13);
+            this.currentPage.TabIndex = 21;
+            this.currentPage.Text = "0";
+            // 
+            // nextPageButton
+            // 
+            this.nextPageButton.Location = new System.Drawing.Point(641, 595);
+            this.nextPageButton.Name = "nextPageButton";
+            this.nextPageButton.Size = new System.Drawing.Size(28, 23);
+            this.nextPageButton.TabIndex = 22;
+            this.nextPageButton.Text = ">";
+            this.nextPageButton.UseVisualStyleBackColor = true;
+            this.nextPageButton.Click += new System.EventHandler(this.nextPageButton_Click);
+            // 
+            // previousPageButton
+            // 
+            this.previousPageButton.Location = new System.Drawing.Point(588, 595);
+            this.previousPageButton.Name = "previousPageButton";
+            this.previousPageButton.Size = new System.Drawing.Size(28, 23);
+            this.previousPageButton.TabIndex = 23;
+            this.previousPageButton.Text = "<";
+            this.previousPageButton.UseVisualStyleBackColor = true;
+            this.previousPageButton.Click += new System.EventHandler(this.previousPageButton_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(989, 630);
+            this.Controls.Add(this.previousPageButton);
+            this.Controls.Add(this.nextPageButton);
+            this.Controls.Add(this.currentPage);
             this.Controls.Add(this.jiraSearchResultTotal);
             this.Controls.Add(this.totalLabel);
             this.Controls.Add(this.fixVersionDropdown);
@@ -427,6 +464,9 @@
         private System.Windows.Forms.ComboBox fixVersionDropdown;
         private System.Windows.Forms.Label totalLabel;
         private System.Windows.Forms.Label jiraSearchResultTotal;
+        private System.Windows.Forms.Label currentPage;
+        private System.Windows.Forms.Button nextPageButton;
+        private System.Windows.Forms.Button previousPageButton;
     }
 }
 

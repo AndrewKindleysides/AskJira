@@ -10,12 +10,14 @@ namespace UI
     {
         public User AppUser;
         private JiraRequest _jiraRequest;
+        private int _pageNumber;
 
         public MainWindow()
         {
             AppUser = new User();
             ShowScreen(SplashScreen);
             InitializeComponent();
+            _pageNumber = 0;
         }
 
         private static void ShowScreen(ThreadStart screen)
@@ -73,6 +75,11 @@ namespace UI
         {
             var mlcJiras = PerformSearchQuery();
             jiraSearchResultTotal.Text = mlcJiras.Total.ToString(CultureInfo.InvariantCulture);
+            DisplayJiras(mlcJiras);
+        }
+
+        private void DisplayJiras(QueryResult mlcJiras)
+        {
             ClearOutTheTable();
             if (mlcJiras.Total > 0)
             {
@@ -99,6 +106,18 @@ namespace UI
                 IssueType = issueTypes.SelectedItem.ToString(),
                 SearchText = searchBox.Text
             });
+        }
+
+        private QueryResult PerformBatchedSearchQuery()
+        {
+            return _jiraRequest.SearchMLCJirasBatched(new SearchItem(dateFrom.Value, dateTo.Value)
+            {
+                Client = clientName.Text,
+                Component = GetIdFromDropdown(componentDropdown.SelectedItem),
+                Version = GetIdFromDropdown(fixVersionDropdown.SelectedItem),
+                IssueType = issueTypes.SelectedItem.ToString(),
+                SearchText = searchBox.Text
+            },_pageNumber);
         }
 
         private string GetIdFromDropdown(object dropdown)
@@ -133,6 +152,21 @@ namespace UI
                 var fileName = string.Format("https://jira.advancedcsg.com/browse/{0}", jiraGrid.CurrentCell.Value);
                 System.Diagnostics.Process.Start(fileName);
             }
+        }
+
+        private void nextPageButton_Click(object sender, System.EventArgs e)
+        {
+            _pageNumber++;
+            currentPage.Text = _pageNumber.ToString();
+            DisplayJiras(PerformBatchedSearchQuery());
+        }
+
+        private void previousPageButton_Click(object sender, System.EventArgs e)
+        {
+            if (_pageNumber == 0) return;
+            _pageNumber--;
+            currentPage.Text = _pageNumber.ToString();
+            DisplayJiras(PerformBatchedSearchQuery());
         }
     }
 }

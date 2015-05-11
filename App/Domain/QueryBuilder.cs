@@ -28,13 +28,14 @@ namespace Domain
 
             return queryString;
         }
-        public string BuildBatched(SearchItem searchItem)
+        public string BuildBatched(SearchItem searchItem, int pageNumber)
         {
+            var startAt = 100*pageNumber;
             var queryString = string.Format(
-                "https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC&maxResults=100&startAt={0} AND (created >= '{1}' AND created <= '{2}')",
-                0,
+                "https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '{0}' AND created <= '{1}') &maxResults=100&startAt={2}",
                 FormatTheDate(searchItem.DateFrom),
-                FormatTheDate(searchItem.DateTo));
+                FormatTheDate(searchItem.DateTo),
+                startAt);
 
             if (searchItem.Version != "0")
                 queryString += string.Format(" AND FixVersion = '{0}'", searchItem.Version);

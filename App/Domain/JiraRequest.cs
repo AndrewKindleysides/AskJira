@@ -36,6 +36,8 @@ namespace Domain
         {
             var response = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC");
             var totalNumberOfJiras = GetTotalNumberOfJiras(response);
+            var pages = new PageCalculator().NumberOfPages(totalNumberOfJiras);
+
 
             var listOfJiras = new List<Jira>();
             for (var i = 0; i <= totalNumberOfJiras; i = i + 100)
@@ -108,7 +110,12 @@ namespace Domain
         public QueryResult SearchMLCJiras(SearchItem searchItem)
         {
             var query = new QueryBuilder().Build(searchItem);
+            return GetJirasFromResult(_client.DownloadString(query));
+        }
 
+        public QueryResult SearchMLCJirasBatched(SearchItem searchItem, int pageNumber)
+        {
+            var query = new QueryBuilder().BuildBatched(searchItem, pageNumber);
             return GetJirasFromResult(_client.DownloadString(query));
         }
 

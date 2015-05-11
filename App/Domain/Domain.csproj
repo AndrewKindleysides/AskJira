@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationConfig.cs" />
+    <Compile Include="PageCalculator.cs" />
     <Compile Include="T3Alarm.cs" />
     <Compile Include="JiraRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
