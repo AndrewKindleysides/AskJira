@@ -92,5 +92,35 @@ namespace Domain.Tests
                 Assert.Equal(expected, actual);
             }
         }
+
+        public class by_multiple_items
+        {
+            private readonly SearchItem _searchItem;
+
+            public by_multiple_items()
+            {
+                var date = DateTime.Parse("4/4/2015");
+                _searchItem = new SearchItem(date.AddDays(-2).Date, date.Date)
+                {
+                    Client = "client search",
+                    Component = "search compenent",
+                    SearchText = "search for this",
+                    IssueType = "issue type search item",
+                    Version = "1.0"
+                };
+            }
+
+            [Fact]
+            public void query_is_built_with_the_values()
+            {
+                var actual = new QueryBuilder().Build(_searchItem);
+                Assert.Contains("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC", actual);
+                Assert.Contains("AND issuetype = 'issue type search item'", actual);
+                Assert.Contains("AND cf[10200]~'client search'", actual);
+                Assert.Contains("AND (summary ~ 'search for this' OR description ~ 'search for this' OR comment ~ 'search for this')", actual);
+                Assert.Contains("AND Component = 'search compenent'", actual);
+                Assert.Contains("AND FixVersion = '1.0'", actual);
+            }
+        }
     }
 }
