@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Forms;
 using System.Threading;
 using Domain;
@@ -71,11 +72,11 @@ namespace UI
         private void searchButton_Click(object sender, System.EventArgs e)
         {
             var mlcJiras = PerformSearchQuery();
-            
+            jiraSearchResultTotal.Text = mlcJiras.Total.ToString(CultureInfo.InvariantCulture);
             ClearOutTheTable();
-            if (mlcJiras.Count > 0)
+            if (mlcJiras.Total > 0)
             {
-                PopulateGridWithResults(mlcJiras);
+                PopulateGridWithResults(mlcJiras.Jiras);
             }
             else
             {
@@ -88,7 +89,7 @@ namespace UI
             jiraGrid.Rows.Clear();
         }
 
-        private List<Jira> PerformSearchQuery()
+        private QueryResult PerformSearchQuery()
         {
             return _jiraRequest.SearchMLCJiras(new SearchItem(dateFrom.Value, dateTo.Value)
             {

@@ -55,17 +55,19 @@ namespace Domain
             return listOfJiras;
         }
 
-        public List<Jira> MLCJiras()
+        public QueryResult MLCJiras()
         {
             var response = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC");
             return GetJirasFromResult(response);
         }
 
-        private static List<Jira> GetJirasFromResult(string response)
+        private static QueryResult GetJirasFromResult(string response)
         {
-            var issues = JObject.Parse(response)["issues"].ToObject<JArray>();
+            var json = JObject.Parse(response);
+            var issues = json["issues"].ToObject<JArray>();
+            var total = json["total"].ToObject<int>();
 
-            return issues.Select(issue => new {issue, fields = issue["fields"]}).Select(@t => new Jira
+            var jirasFromResult = issues.Select(issue => new {issue, fields = issue["fields"]}).Select(@t => new Jira
             {
                 Name = @t.issue["key"].ToString(),
                 Summary = @t.fields["summary"].ToString(),
@@ -74,6 +76,12 @@ namespace Domain
                 Reporter = @t.fields["reporter"]["displayName"].ToString(),
                 Assignee = @t.fields["assignee"].ToString() != "" ? @t.fields["assignee"]["displayName"].ToString() : ""
             }).ToList();
+            
+            return new QueryResult()
+            {
+                Total = total,
+                Jiras = jirasFromResult
+            };
         }
 
         private IEnumerable<JToken> GetBatchOfJiras(int startAt)
@@ -97,7 +105,7 @@ namespace Domain
             return JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
         }
 
-        public List<Jira> SearchMLCJiras(SearchItem searchItem)
+        public QueryResult SearchMLCJiras(SearchItem searchItem)
         {
             var query = new QueryBuilder().Build(searchItem);
 
@@ -139,6 +147,12 @@ namespace Domain
             }
             return versions;
         }
+    }
+
+    public class QueryResult
+    {
+        public int Total { get; set; }
+        public List<Jira> Jiras { get; set; }
     }
 
     public class Jira

@@ -58,6 +58,8 @@
             this.componentLabel = new System.Windows.Forms.Label();
             this.fixVersionLabel = new System.Windows.Forms.Label();
             this.fixVersionDropdown = new System.Windows.Forms.ComboBox();
+            this.totalLabel = new System.Windows.Forms.Label();
+            this.jiraSearchResultTotal = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.jiraGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -331,12 +333,37 @@
             this.fixVersionDropdown.Size = new System.Drawing.Size(121, 21);
             this.fixVersionDropdown.TabIndex = 18;
             // 
+            // totalLabel
+            // 
+            this.totalLabel.AutoSize = true;
+            this.totalLabel.ForeColor = System.Drawing.Color.White;
+            this.totalLabel.Location = new System.Drawing.Point(330, 605);
+            this.totalLabel.Name = "totalLabel";
+            this.totalLabel.Size = new System.Drawing.Size(37, 13);
+            this.totalLabel.TabIndex = 19;
+            this.totalLabel.Text = "Total: ";
+            this.totalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // jiraSearchResultTotal
+            // 
+            this.jiraSearchResultTotal.AutoSize = true;
+            this.jiraSearchResultTotal.ForeColor = System.Drawing.Color.White;
+            this.jiraSearchResultTotal.Location = new System.Drawing.Point(361, 605);
+            this.jiraSearchResultTotal.Name = "jiraSearchResultTotal";
+            this.jiraSearchResultTotal.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.jiraSearchResultTotal.Size = new System.Drawing.Size(13, 13);
+            this.jiraSearchResultTotal.TabIndex = 20;
+            this.jiraSearchResultTotal.Text = "0";
+            this.jiraSearchResultTotal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(989, 630);
+            this.Controls.Add(this.jiraSearchResultTotal);
+            this.Controls.Add(this.totalLabel);
             this.Controls.Add(this.fixVersionDropdown);
             this.Controls.Add(this.fixVersionLabel);
             this.Controls.Add(this.componentLabel);
@@ -398,6 +425,8 @@
         private System.Windows.Forms.Label componentLabel;
         private System.Windows.Forms.Label fixVersionLabel;
         private System.Windows.Forms.ComboBox fixVersionDropdown;
+        private System.Windows.Forms.Label totalLabel;
+        private System.Windows.Forms.Label jiraSearchResultTotal;
     }
 }
 

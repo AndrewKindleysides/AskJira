@@ -28,7 +28,32 @@ namespace Domain
 
             return queryString;
         }
+        public string BuildBatched(SearchItem searchItem)
+        {
+            var queryString = string.Format(
+                "https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC&maxResults=100&startAt={0} AND (created >= '{1}' AND created <= '{2}')",
+                0,
+                FormatTheDate(searchItem.DateFrom),
+                FormatTheDate(searchItem.DateTo));
 
+            if (searchItem.Version != "0")
+                queryString += string.Format(" AND FixVersion = '{0}'", searchItem.Version);
+
+            if (searchItem.Component != "0")
+                queryString += string.Format(" AND Component = '{0}'", searchItem.Component);
+
+            if (searchItem.SearchText != "")
+                queryString += string.Format(" AND (summary ~ '{0}' OR description ~ '{0}' OR comment ~ '{0}')", searchItem.SearchText);
+
+            if (searchItem.Client != "")
+                queryString += string.Format(" AND cf[10200]~'{0}'", searchItem.Client);
+
+            if (searchItem.IssueType != "Any")
+                queryString += string.Format(" AND issuetype = '{0}'", searchItem.IssueType);
+
+            return queryString;
+        }
+        
         private string FormatTheDate(DateTime date)
         {
             return date.Date.ToString("yyyy-MM-dd h:mm").Replace('/', '-');
