@@ -77,10 +77,9 @@ namespace Domain
         public Dictionary<int, string> Components()
         {
             var issueTypes = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/project/LCSMLC");
-            var array = JObject.Parse(issueTypes)["components"].ToList();
-
             var components = new Dictionary<int, string> {{0, "Any"}};
-            foreach (var component in array)
+
+            foreach (var component in JObject.Parse(issueTypes)["components"].ToList())
             {
                 components.Add(component["id"].ToObject<int>(),component["name"].ToString());
             }

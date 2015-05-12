@@ -91,10 +91,12 @@ namespace UI
             if (mlcJiras.Total > 0)
             {
                 PopulateGridWithResults(mlcJiras.Jiras);
+                ShowPagingNavigation();
             }
             else
             {
                 DisplayNoResultsMessage();
+                HidePagingNavigation();
             }
         }
 
@@ -150,6 +152,28 @@ namespace UI
         private void clearButton_Click(object sender, System.EventArgs e)
         {
             ClearOutTheTable();
+            HidePagingNavigation();
+            _pageNumber = 0;
+        }
+
+        private void HidePagingNavigation()
+        {
+            jiraSearchResultTotal.Visible = false;
+            totalLabel.Visible = false;
+            previousPageButton.Visible = false;
+            nextPageButton.Visible = false;
+            currentPage.Text = "0";
+            currentPage.Visible = false;
+        }
+
+        private void ShowPagingNavigation()
+        {
+            jiraSearchResultTotal.Visible = true;
+            totalLabel.Visible = true;
+            previousPageButton.Visible = true;
+            nextPageButton.Visible = true;
+            currentPage.Visible = true;
+
         }
 
         private void jiraGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)

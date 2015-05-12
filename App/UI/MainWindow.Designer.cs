@@ -340,24 +340,26 @@
             // 
             this.totalLabel.AutoSize = true;
             this.totalLabel.ForeColor = System.Drawing.Color.White;
-            this.totalLabel.Location = new System.Drawing.Point(330, 605);
+            this.totalLabel.Location = new System.Drawing.Point(482, 600);
             this.totalLabel.Name = "totalLabel";
             this.totalLabel.Size = new System.Drawing.Size(37, 13);
             this.totalLabel.TabIndex = 19;
             this.totalLabel.Text = "Total: ";
             this.totalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.totalLabel.Visible = false;
             // 
             // jiraSearchResultTotal
             // 
             this.jiraSearchResultTotal.AutoSize = true;
             this.jiraSearchResultTotal.ForeColor = System.Drawing.Color.White;
-            this.jiraSearchResultTotal.Location = new System.Drawing.Point(361, 605);
+            this.jiraSearchResultTotal.Location = new System.Drawing.Point(513, 600);
             this.jiraSearchResultTotal.Name = "jiraSearchResultTotal";
             this.jiraSearchResultTotal.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.jiraSearchResultTotal.Size = new System.Drawing.Size(13, 13);
             this.jiraSearchResultTotal.TabIndex = 20;
             this.jiraSearchResultTotal.Text = "0";
             this.jiraSearchResultTotal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.jiraSearchResultTotal.Visible = false;
             // 
             // currentPage
             // 
@@ -369,15 +371,17 @@
             this.currentPage.Size = new System.Drawing.Size(13, 13);
             this.currentPage.TabIndex = 21;
             this.currentPage.Text = "0";
+            this.currentPage.Visible = false;
             // 
             // nextPageButton
             // 
-            this.nextPageButton.Location = new System.Drawing.Point(641, 595);
+            this.nextPageButton.Location = new System.Drawing.Point(659, 595);
             this.nextPageButton.Name = "nextPageButton";
             this.nextPageButton.Size = new System.Drawing.Size(28, 23);
             this.nextPageButton.TabIndex = 22;
             this.nextPageButton.Text = ">";
             this.nextPageButton.UseVisualStyleBackColor = true;
+            this.nextPageButton.Visible = false;
             this.nextPageButton.Click += new System.EventHandler(this.nextPageButton_Click);
             // 
             // previousPageButton
@@ -388,6 +392,7 @@
             this.previousPageButton.TabIndex = 23;
             this.previousPageButton.Text = "<";
             this.previousPageButton.UseVisualStyleBackColor = true;
+            this.previousPageButton.Visible = false;
             this.previousPageButton.Click += new System.EventHandler(this.previousPageButton_Click);
             // 
             // MainWindow
