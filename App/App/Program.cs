@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using System.Net;
+using Domain;
 
 namespace App
 {
@@ -6,7 +7,13 @@ namespace App
     {
         public static void Main(string[] args)
         {
-            var jiraRequest = new JiraRequest(new UserLogin(new User()).GetAuthenticationToken());
+
+            var auth = new UserLogin(new User()).GetAuthenticationToken();
+            var webClient = new WebClient
+            {
+                Headers = new WebHeaderCollection { "Authorization: Basic " + auth }
+            };
+            var jiraRequest = new JiraRequest(webClient);
             new T3Alarm().Start(jiraRequest.MLCT3AwaitingTriage);
         }
     }

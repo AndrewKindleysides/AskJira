@@ -1,24 +1,19 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Runtime.InteropServices;
 using Newtonsoft.Json.Linq;
 
 namespace Domain
 {
     public class JiraRequest
     {
-        private const string Customfield = "customfield_10200";
+        private const string ClientNameField = "customfield_10200";
         private readonly WebClient _client;
 
-        public JiraRequest(string auth)
+        public JiraRequest(WebClient client)
         {
-            _client = new WebClient
-            {
-                Headers = new WebHeaderCollection { "Authorization: Basic " + auth }
-            };
+            _client = client;
         }
 
         public int JirasWithStatusForProjectCode(string status, string projectCode)
@@ -32,37 +27,6 @@ namespace Domain
             return (int)json["total"];
         }
 
-        public List<Jira> MLCJirasBatched()
-        {
-            var response = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC");
-            var totalNumberOfJiras = GetTotalNumberOfJiras(response);
-            var pages = new PageCalculator().NumberOfPages(totalNumberOfJiras);
-
-
-            var listOfJiras = new List<Jira>();
-            for (var i = 0; i <= totalNumberOfJiras; i = i + 100)
-            {
-                var jiraBatch = GetBatchOfJiras(i);
-                listOfJiras.AddRange(from jira in jiraBatch
-                                     let fields = jira["fields"]
-                                     select new Jira
-                                     {
-                                         Name = jira["key"].ToString(),
-                                         Summary = fields["summary"].ToString(),
-                                         DateCreated = fields["created"].ToObject<DateTime>(),
-                                         Client = fields[Customfield].ToString()
-                                     });
-            }
-
-            return listOfJiras;
-        }
-
-        public QueryResult MLCJiras()
-        {
-            var response = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC");
-            return GetJirasFromResult(response);
-        }
-
         private static QueryResult GetJirasFromResult(string response)
         {
             var json = JObject.Parse(response);
@@ -74,27 +38,16 @@ namespace Domain
                 Name = @t.issue["key"].ToString(),
                 Summary = @t.fields["summary"].ToString(),
                 DateCreated = @t.fields["created"].ToObject<DateTime>(),
-                Client = @t.fields[Customfield] != null ? @t.fields[Customfield].ToString() : "No Client Set",
+                Client = @t.fields[ClientNameField] != null ? @t.fields[ClientNameField].ToString() : "No Client Set",
                 Reporter = @t.fields["reporter"]["displayName"].ToString(),
                 Assignee = @t.fields["assignee"].ToString() != "" ? @t.fields["assignee"]["displayName"].ToString() : ""
             }).ToList();
             
-            return new QueryResult()
+            return new QueryResult
             {
                 Total = total,
                 Jiras = jirasFromResult
             };
-        }
-
-        private IEnumerable<JToken> GetBatchOfJiras(int startAt)
-        {
-            var response = _client.DownloadString(string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC&maxResults=100&startAt={0}", startAt));
-            return JObject.Parse(response)["issues"].ToObject<JArray>();
-        }
-
-        private int GetTotalNumberOfJiras(string response)
-        {
-            return JObject.Parse(response)["total"].ToObject<int>();
         }
 
         public int MLCT3AwaitingTriage()
@@ -107,12 +60,6 @@ namespace Domain
             return JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
         }
 
-        public QueryResult SearchMLCJiras(SearchItem searchItem)
-        {
-            var query = new QueryBuilder().Build(searchItem);
-            return GetJirasFromResult(_client.DownloadString(query));
-        }
-
         public QueryResult SearchMLCJirasBatched(SearchItem searchItem, int pageNumber)
         {
             var query = new QueryBuilder().BuildBatched(searchItem, pageNumber);
@@ -122,10 +69,9 @@ namespace Domain
         public List<string> IssueTypes()
         {
             var issueTypes = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/issuetype");
-            var types = JArray.Parse(issueTypes)
+            return JArray.Parse(issueTypes)
                 .Select(issue => issue["name"])
                 .Select(issueTypeName => (string) issueTypeName).ToList();
-            return types;
         }
 
         public Dictionary<int, string> Components()
@@ -146,7 +92,7 @@ namespace Domain
             var issueTypes = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/project/LCSMLC");
             var array = JObject.Parse(issueTypes)["versions"].ToList();
 
-            var versions = new Dictionary<int, string>() { { 0, "Any" } };
+            var versions = new Dictionary<int, string> { { 0, "Any" } };
 
             foreach (var component in array)
             {

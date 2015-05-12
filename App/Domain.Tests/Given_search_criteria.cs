@@ -16,8 +16,8 @@ namespace Domain.Tests
 
                 var expected =
                     string.Format(
-                        "https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00')");
-                var actual = new QueryBuilder().Build(searchItem);
+                        "https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') &maxResults=100&startAt=0");
+                var actual = new QueryBuilder().BuildBatched(searchItem,0);
 
                 Assert.Equal(expected, actual);
             }
@@ -38,9 +38,9 @@ namespace Domain.Tests
             {
                 var expected =
                     string.Format(
-                        "https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND (summary ~ 'search for this' OR description ~ 'search for this' OR comment ~ 'search for this')");
+                        "https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND (summary ~ 'search for this' OR description ~ 'search for this' OR comment ~ 'search for this') &maxResults=100&startAt=0");
                 _searchItem.SearchText = "search for this";
-                var actual = new QueryBuilder().Build(_searchItem);
+                var actual = new QueryBuilder().BuildBatched(_searchItem, 0);
 
                 Assert.Equal(expected, actual);
             }
@@ -50,9 +50,9 @@ namespace Domain.Tests
             {
                 var expected =
                     string.Format(
-                        "https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND issuetype = 'issue type A'");
+                        "https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND issuetype = 'issue type A' &maxResults=100&startAt=0");
                 _searchItem.IssueType = "issue type A";
-                var actual = new QueryBuilder().Build(_searchItem);
+                var actual = new QueryBuilder().BuildBatched(_searchItem, 0);
 
                 Assert.Equal(expected, actual);
             }
@@ -62,9 +62,9 @@ namespace Domain.Tests
             {
                 var expected =
                     string.Format(
-                        "https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND cf[10200]~'client name'");
+                        "https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND cf[10200]~'client name' &maxResults=100&startAt=0");
                 _searchItem.Client = "client name";
-                var actual = new QueryBuilder().Build(_searchItem);
+                var actual = new QueryBuilder().BuildBatched(_searchItem, 0);
 
                 Assert.Equal(expected, actual);
             }
@@ -74,9 +74,9 @@ namespace Domain.Tests
             {
                 var expected =
                     string.Format(
-                        "https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND Component = 'component Id'");
+                        "https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND Component = 'component Id' &maxResults=100&startAt=0");
                 _searchItem.Component = "component Id";
-                var actual = new QueryBuilder().Build(_searchItem);
+                var actual = new QueryBuilder().BuildBatched(_searchItem, 0);
 
                 Assert.Equal(expected, actual);
             }
@@ -86,9 +86,9 @@ namespace Domain.Tests
             {
                 var expected =
                     string.Format(
-                        "https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND FixVersion = 'version Id'");
+                        "https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '2015-04-02 12:00' AND created <= '2015-04-04 12:00') AND FixVersion = 'version Id' &maxResults=100&startAt=0");
                 _searchItem.Version = "version Id";
-                var actual = new QueryBuilder().Build(_searchItem);
+                var actual = new QueryBuilder().BuildBatched(_searchItem, 0);
                 Assert.Equal(expected, actual);
             }
         }
@@ -113,13 +113,14 @@ namespace Domain.Tests
             [Fact]
             public void query_is_built_with_the_values()
             {
-                var actual = new QueryBuilder().Build(_searchItem);
+                var actual = new QueryBuilder().BuildBatched(_searchItem, 0);
                 Assert.Contains("https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC", actual);
                 Assert.Contains("AND issuetype = 'issue type search item'", actual);
                 Assert.Contains("AND cf[10200]~'client search'", actual);
                 Assert.Contains("AND (summary ~ 'search for this' OR description ~ 'search for this' OR comment ~ 'search for this')", actual);
                 Assert.Contains("AND Component = 'search compenent'", actual);
                 Assert.Contains("AND FixVersion = '1.0'", actual);
+                Assert.EndsWith("&maxResults=100&startAt=0",actual);
             }
         }
     }

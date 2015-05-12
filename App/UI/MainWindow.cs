@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
+using System.Net;
 using System.Windows.Forms;
 using System.Threading;
 using Domain;
@@ -41,7 +42,13 @@ namespace UI
                 AppUser.Username = loginScreen.Username;
                 AppUser.Password = loginScreen.Password;
             }
-            _jiraRequest = new JiraRequest(AppUser.AuthenticationToken());
+
+            var webClient = new WebClient
+            {
+                Headers = new WebHeaderCollection { "Authorization: Basic " + AppUser.AuthenticationToken() }
+            };
+
+            _jiraRequest = new JiraRequest(webClient);
             PopulateIssueTypesDropdown();
             PopulateComponentDropdown();
             PopulateFixVersionDropdown();
@@ -98,14 +105,14 @@ namespace UI
 
         private QueryResult PerformSearchQuery()
         {
-            return _jiraRequest.SearchMLCJiras(new SearchItem(dateFrom.Value, dateTo.Value)
+            return _jiraRequest.SearchMLCJirasBatched(new SearchItem(dateFrom.Value, dateTo.Value)
             {
                 Client = clientName.Text,
-                Component =  GetIdFromDropdown(componentDropdown.SelectedItem),
+                Component = GetIdFromDropdown(componentDropdown.SelectedItem),
                 Version = GetIdFromDropdown(fixVersionDropdown.SelectedItem),
                 IssueType = issueTypes.SelectedItem.ToString(),
                 SearchText = searchBox.Text
-            });
+            }, 0);
         }
 
         private QueryResult PerformBatchedSearchQuery()
