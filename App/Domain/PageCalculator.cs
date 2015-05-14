@@ -2,9 +2,16 @@ namespace Domain
 {
     public class PageCalculator
     {
+        private readonly int _numberOfItems;
+
+        public PageCalculator(int numberOfItems)
+        {
+            _numberOfItems = numberOfItems;
+        }
+
         public int NumberOfPages(int totalJiras)
         {
-            return (totalJiras + 100 - 1) / 100;
+            return (totalJiras + _numberOfItems - 1) / _numberOfItems;
         }
     }
 }

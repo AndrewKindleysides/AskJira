@@ -68,36 +68,57 @@ namespace Domain
 
         public List<string> IssueTypes()
         {
-            var issueTypes = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/issuetype");
-            return JArray.Parse(issueTypes)
-                .Select(issue => issue["name"])
-                .Select(issueTypeName => (string) issueTypeName).ToList();
+            try
+            {
+                var issueTypes = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/issuetype");
+                return JArray.Parse(issueTypes)
+                    .Select(issue => issue["name"])
+                    .Select(issueTypeName => (string) issueTypeName).ToList();
+            }
+            catch (Exception)
+            {
+                return new List<string>();
+            }
         }
 
         public Dictionary<int, string> Components()
         {
-            var issueTypes = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/project/LCSMLC");
-            var components = new Dictionary<int, string> {{0, "Any"}};
-
-            foreach (var component in JObject.Parse(issueTypes)["components"].ToList())
+            try
             {
-                components.Add(component["id"].ToObject<int>(),component["name"].ToString());
+                var issueTypes = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/project/LCSMLC");
+                var components = new Dictionary<int, string> {{0, "Any"}};
+
+                foreach (var component in JObject.Parse(issueTypes)["components"].ToList())
+                {
+                    components.Add(component["id"].ToObject<int>(), component["name"].ToString());
+                }
+                return components;
             }
-            return components;
+            catch (Exception)
+            {
+                return new Dictionary<int, string>();
+            }
         }
 
         public Dictionary<int, string> Versions()
         {
-            var issueTypes = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/project/LCSMLC");
-            var array = JObject.Parse(issueTypes)["versions"].ToList();
-
-            var versions = new Dictionary<int, string> { { 0, "Any" } };
-
-            foreach (var component in array)
+            try
             {
-                versions.Add(component["id"].ToObject<int>(),component["name"].ToString());
+                var issueTypes = _client.DownloadString("https://jira.advancedcsg.com/rest/api/2/project/LCSMLC");
+                var array = JObject.Parse(issueTypes)["versions"].ToList();
+
+                var versions = new Dictionary<int, string> {{0, "Any"}};
+
+                foreach (var component in array)
+                {
+                    versions.Add(component["id"].ToObject<int>(), component["name"].ToString());
+                }
+                return versions;
             }
-            return versions;
+            catch (Exception)
+            {
+                return new Dictionary<int, string>();
+            }
         }
     }
 
