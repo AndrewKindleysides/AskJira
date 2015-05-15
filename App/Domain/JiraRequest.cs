@@ -60,9 +60,9 @@ namespace Domain
             return JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
         }
 
-        public QueryResult SearchMLCJirasBatched(SearchItem searchItem, int pageNumber)
+        public QueryResult SearchMLCJirasBatched(SearchItem searchItem, int pageNumber, int maxResults)
         {
-            var query = new QueryBuilder().BuildBatched(searchItem, pageNumber);
+            var query = new QueryBuilder().BuildBatched(searchItem, pageNumber, maxResults);
             return GetJirasFromResult(_client.DownloadString(query));
         }
 

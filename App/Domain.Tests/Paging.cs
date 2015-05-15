@@ -2,14 +2,41 @@
 
 namespace Domain.Tests
 {
-    public class Paging
+    namespace Number_of_pages_is_calculated
     {
-        [Fact]
-        public void number_of_pages_of_results_is_determined()
+        public class when_items_per_page_is_set_to
         {
-            var pageCalculator = new PageCalculator();
-            var pages = pageCalculator.NumberOfPages(12546);
-            Assert.Equal(126,pages);
+            [Fact]
+            public void _10_jiras_per_page()
+            {
+                var pageCalculator = new PageCalculator(10);
+                var pages = pageCalculator.NumberOfPages(12546);
+                Assert.Equal(1255, pages);
+            }
+
+            [Fact]
+            public void _50_jiras_per_page()
+            {
+                var pageCalculator = new PageCalculator(50);
+                var pages = pageCalculator.NumberOfPages(12546);
+                Assert.Equal(251, pages);
+            }
+
+            [Fact]
+            public void _100_jiras_per_page()
+            {
+                var pageCalculator = new PageCalculator(100);
+                var pages = pageCalculator.NumberOfPages(12546);
+                Assert.Equal(126, pages);
+            }
+
+            [Fact]
+            public void _500_jiras_per_page()
+            {
+                var pageCalculator = new PageCalculator(500);
+                var pages = pageCalculator.NumberOfPages(12546);
+                Assert.Equal(26, pages);
+            }
         }
     }
 }

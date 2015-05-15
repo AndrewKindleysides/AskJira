@@ -63,6 +63,8 @@
             this.currentPage = new System.Windows.Forms.Label();
             this.nextPageButton = new System.Windows.Forms.Button();
             this.previousPageButton = new System.Windows.Forms.Button();
+            this.jirasPerPageLabel = new System.Windows.Forms.Label();
+            this.jirasPerPageDropdown = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.jiraGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -395,12 +397,38 @@
             this.previousPageButton.Visible = false;
             this.previousPageButton.Click += new System.EventHandler(this.previousPageButton_Click);
             // 
+            // jirasPerPageLabel
+            // 
+            this.jirasPerPageLabel.AutoSize = true;
+            this.jirasPerPageLabel.ForeColor = System.Drawing.Color.White;
+            this.jirasPerPageLabel.Location = new System.Drawing.Point(675, 64);
+            this.jirasPerPageLabel.Name = "jirasPerPageLabel";
+            this.jirasPerPageLabel.Size = new System.Drawing.Size(78, 13);
+            this.jirasPerPageLabel.TabIndex = 24;
+            this.jirasPerPageLabel.Text = "Jiras Per Page:";
+            // 
+            // jirasPerPageDropdown
+            // 
+            this.jirasPerPageDropdown.FormattingEnabled = true;
+            this.jirasPerPageDropdown.Items.AddRange(new object[] {
+            "10",
+            "50",
+            "100",
+            "500"});
+            this.jirasPerPageDropdown.Location = new System.Drawing.Point(759, 61);
+            this.jirasPerPageDropdown.Name = "jirasPerPageDropdown";
+            this.jirasPerPageDropdown.Size = new System.Drawing.Size(71, 21);
+            this.jirasPerPageDropdown.TabIndex = 25;
+            this.jirasPerPageDropdown.SelectedIndexChanged += new System.EventHandler(this.jirasPerPageDropdown_SelectedIndexChanged);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(989, 630);
+            this.Controls.Add(this.jirasPerPageDropdown);
+            this.Controls.Add(this.jirasPerPageLabel);
             this.Controls.Add(this.previousPageButton);
             this.Controls.Add(this.nextPageButton);
             this.Controls.Add(this.currentPage);
@@ -472,6 +500,8 @@
         private System.Windows.Forms.Label currentPage;
         private System.Windows.Forms.Button nextPageButton;
         private System.Windows.Forms.Button previousPageButton;
+        private System.Windows.Forms.Label jirasPerPageLabel;
+        private System.Windows.Forms.ComboBox jirasPerPageDropdown;
     }
 }
 
