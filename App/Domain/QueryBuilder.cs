@@ -4,9 +4,9 @@ namespace Domain
 {
     public class QueryBuilder
     {
-        public string BuildBatched(SearchItem searchItem, int pageNumber)
+        public string BuildBatched(SearchItem searchItem, int pageNumber, int maxResults)
         {
-            var startAt = 100 * pageNumber;
+            var startAt = maxResults * pageNumber;
             var queryString = string.Format(
                 "https://jira.advancedcsg.com/rest/api/2/search?jql=project=LCSMLC AND (created >= '{0}' AND created <= '{1}')",
                 FormatTheDate(searchItem.DateFrom),
@@ -27,7 +27,8 @@ namespace Domain
             if (searchItem.IssueType != "Any")
                 queryString += string.Format(" AND issuetype = '{0}'", searchItem.IssueType);
 
-            queryString += string.Format(" &maxResults=100&startAt={0}", startAt);
+           
+            queryString += string.Format(" &maxResults={0}&startAt={1}",maxResults, startAt);
             
             return queryString;
         }

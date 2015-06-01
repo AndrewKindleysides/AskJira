@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Windows.Forms;
@@ -12,6 +13,7 @@ namespace UI
         public User AppUser;
         private JiraRequest _jiraRequest;
         private int _pageNumber;
+        private SearchItem _searchItem;
 
         public MainWindow()
         {
@@ -19,6 +21,7 @@ namespace UI
             ShowScreen(SplashScreen);
             InitializeComponent();
             _pageNumber = 0;
+            _searchItem = null;
         }
 
         private static void ShowScreen(ThreadStart screen)
@@ -107,26 +110,28 @@ namespace UI
 
         private QueryResult PerformSearchQuery()
         {
-            return _jiraRequest.SearchMLCJirasBatched(new SearchItem(dateFrom.Value, dateTo.Value)
+            _searchItem = new SearchItem(dateFrom.Value, dateTo.Value)
             {
                 Client = clientName.Text,
                 Component = GetIdFromDropdown(componentDropdown.SelectedItem),
                 Version = GetIdFromDropdown(fixVersionDropdown.SelectedItem),
                 IssueType = issueTypes.SelectedItem.ToString(),
                 SearchText = searchBox.Text
-            }, 0);
+            };
+            return _jiraRequest.SearchMLCJirasBatched(_searchItem, 0, Convert.ToInt32(jirasPerPageDropdown.SelectedItem));
         }
 
         private QueryResult PerformBatchedSearchQuery()
         {
-            return _jiraRequest.SearchMLCJirasBatched(new SearchItem(dateFrom.Value, dateTo.Value)
+            _searchItem = new SearchItem(dateFrom.Value, dateTo.Value)
             {
                 Client = clientName.Text,
                 Component = GetIdFromDropdown(componentDropdown.SelectedItem),
                 Version = GetIdFromDropdown(fixVersionDropdown.SelectedItem),
                 IssueType = issueTypes.SelectedItem.ToString(),
                 SearchText = searchBox.Text
-            },_pageNumber);
+            };
+            return _jiraRequest.SearchMLCJirasBatched(_searchItem, _pageNumber, Convert.ToInt32(jirasPerPageDropdown.SelectedItem));
         }
 
         private string GetIdFromDropdown(object dropdown)
@@ -145,7 +150,7 @@ namespace UI
             for (var index = 0; index < mlcJiras.Count; index++)
             {
                 var jira = mlcJiras[index];
-                jiraGrid.Rows.Add(index, jira.Name, jira.Summary, jira.DateCreated, jira.Client, jira.Reporter, jira.Assignee);
+                jiraGrid.Rows.Add(index+1, jira.Name, jira.Summary, jira.DateCreated, jira.Client, jira.Reporter, jira.Assignee);
             }
         }
 
@@ -154,6 +159,7 @@ namespace UI
             ClearOutTheTable();
             HidePagingNavigation();
             _pageNumber = 0;
+            _searchItem = null;
         }
 
         private void HidePagingNavigation()
@@ -198,6 +204,12 @@ namespace UI
             _pageNumber--;
             currentPage.Text = _pageNumber.ToString();
             DisplayJiras(PerformBatchedSearchQuery());
+        }
+
+        private void jirasPerPageDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(_searchItem != null)
+                DisplayJiras(PerformBatchedSearchQuery());
         }
     }
 }
