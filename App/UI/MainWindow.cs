@@ -22,6 +22,7 @@ namespace UI
             InitializeComponent();
             _pageNumber = 0;
             _searchItem = null;
+            jirasPerPageDropdown.SelectedIndex = 0;
         }
 
         private static void ShowScreen(ThreadStart screen)
@@ -83,6 +84,7 @@ namespace UI
 
         private void searchButton_Click(object sender, System.EventArgs e)
         {
+            ResetEverything();
             var mlcJiras = PerformSearchQuery();
             jiraSearchResultTotal.Text = mlcJiras.Total.ToString(CultureInfo.InvariantCulture);
             DisplayJiras(mlcJiras);
@@ -155,6 +157,11 @@ namespace UI
         }
 
         private void clearButton_Click(object sender, System.EventArgs e)
+        {
+            ResetEverything();
+        }
+
+        private void ResetEverything()
         {
             ClearOutTheTable();
             HidePagingNavigation();
