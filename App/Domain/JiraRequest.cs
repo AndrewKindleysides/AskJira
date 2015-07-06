@@ -21,6 +21,7 @@ namespace Domain
             var url = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=status='{0}' AND project={1} AND 'T3 - Type' != 'Enhancement'", status, projectCode);
             var response = _client.DownloadString(url);
             var json = JObject.Parse(response);
+            Console.WriteLine("Jiras for: {0}", projectCode);
             Console.WriteLine("Time polled: {0}", DateTime.Now);
             Console.WriteLine("Json: {0}", json);
             Console.WriteLine();
@@ -50,9 +51,24 @@ namespace Domain
             };
         }
 
+        public int AllT3AwaitingTriage()
+        {
+            var mlc = JirasWithStatusForProjectCode("Awaiting Triage", "LCSMLC");
+            var mlaw = JirasWithStatusForProjectCode("Awaiting Triage", "LCSMLAW");
+            var lf = JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
+            if (mlc > 0 || mlaw > 0 || lf > 0)
+                return 1;
+            return 0;
+        }
+
         public int MLCT3AwaitingTriage()
         {
             return JirasWithStatusForProjectCode("Awaiting Triage", "LCSMLC");
+        }
+
+        public int MLAWT3AwaitingTriage()
+        {
+            return JirasWithStatusForProjectCode("Awaiting Triage", "LCSMLAW");
         }
 
         public int LaserformT3AwaitingTriage()
