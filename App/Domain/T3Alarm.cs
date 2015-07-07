@@ -7,9 +7,8 @@ namespace Domain
 {
     public class T3Alarm
     {
-        private readonly SoundPlayer _soundPlayer;
         private readonly double _waitTime;
-        private Dictionary<string, SoundPlayer> _soundPlayers;
+        private readonly Dictionary<string, SoundPlayer> _soundPlayers;
 
         public T3Alarm()
         {
