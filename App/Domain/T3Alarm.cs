@@ -26,24 +26,15 @@ namespace Domain
         {
             while (true)
             {
-                var projectsWithT3S = request().ProjectsWithT3s;
-                if (projectsWithT3S.Count >= 1)
-                    foreach (var pair in projectsWithT3S)
+                var projectsWithT3 = request().ProjectsWithT3;
+                if (projectsWithT3.Count >= 1)
+                    foreach (var project in projectsWithT3)
                     {
-                        _soundPlayers[pair.Key].Play();
+                        _soundPlayers[project.Key].Play();
                     }
                 
                 Thread.Sleep(TimeSpan.FromSeconds(_waitTime));
             }
-        }
-    }
-
-    public class PingResult
-    {
-        public Dictionary<string, int> ProjectsWithT3s { get; set; } 
-        public PingResult()
-        {
-            ProjectsWithT3s = new Dictionary<string, int>();
         }
     }
 }

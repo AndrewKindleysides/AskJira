@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.NetworkInformation;
 using Newtonsoft.Json.Linq;
 
 namespace Domain
@@ -54,40 +53,24 @@ namespace Domain
 
         public PingResult AllT3AwaitingTriage()
         {
+            var mlcJiraCount = JirasWithStatusForProjectCode("Awaiting Triage", "LCSMLC");
+            var mlawJiraCount = JirasWithStatusForProjectCode("Awaiting Triage", "LCSMLAW");
+            var lfmJiraCount = JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
 
             var result = new PingResult();
             
-            var mlc = JirasWithStatusForProjectCode("Awaiting Triage", "LCSMLC");
-            var mlaw = JirasWithStatusForProjectCode("Awaiting Triage", "LCSMLAW");
-            var lf = JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
+            if (mlcJiraCount > 0)
+                result.ProjectsWithT3.Add("MLC",mlcJiraCount);    
             
-            if (mlc > 0)
-                result.ProjectsWithT3s.Add("MLC",mlc);    
-            
-            if (mlaw > 0)
-                result.ProjectsWithT3s.Add("MLAW",mlaw);
+            if (mlawJiraCount > 0)
+                result.ProjectsWithT3.Add("MLAW",mlawJiraCount);
 
-            if(lf > 0)
-                result.ProjectsWithT3s.Add("LFM",lf);
+            if(lfmJiraCount > 0)
+                result.ProjectsWithT3.Add("LFM",lfmJiraCount);
 
             return result;
         }
-
-        public int MLCT3AwaitingTriage()
-        {
-            return JirasWithStatusForProjectCode("Awaiting Triage", "LCSMLC");
-        }
-
-        public int MLAWT3AwaitingTriage()
-        {
-            return JirasWithStatusForProjectCode("Awaiting Triage", "LCSMLAW");
-        }
-
-        public int LaserformT3AwaitingTriage()
-        {
-            return JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
-        }
-
+        
         public QueryResult SearchMLCJirasBatched(SearchItem searchItem, int pageNumber, int maxResults)
         {
             var query = new QueryBuilder().BuildBatched(searchItem, pageNumber, maxResults);
