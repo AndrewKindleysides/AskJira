@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using Newtonsoft.Json.Linq;
 
 namespace Domain
@@ -51,14 +52,25 @@ namespace Domain
             };
         }
 
-        public int AllT3AwaitingTriage()
+        public PingResult AllT3AwaitingTriage()
         {
+
+            var result = new PingResult();
+            
             var mlc = JirasWithStatusForProjectCode("Awaiting Triage", "LCSMLC");
             var mlaw = JirasWithStatusForProjectCode("Awaiting Triage", "LCSMLAW");
             var lf = JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
-            if (mlc > 0 || mlaw > 0 || lf > 0)
-                return 1;
-            return 0;
+            
+            if (mlc > 0)
+                result.ProjectsWithT3s.Add("MLC",mlc);    
+            
+            if (mlaw > 0)
+                result.ProjectsWithT3s.Add("MLAW",mlaw);
+
+            if(lf > 0)
+                result.ProjectsWithT3s.Add("LFM",lf);
+
+            return result;
         }
 
         public int MLCT3AwaitingTriage()
