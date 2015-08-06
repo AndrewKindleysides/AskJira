@@ -63,6 +63,15 @@ namespace Domain {
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
+        internal static System.IO.UnmanagedMemoryStream IQL {
+            get {
+                return ResourceManager.GetStream("IQL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
         internal static System.IO.UnmanagedMemoryStream LFM {
             get {
                 return ResourceManager.GetStream("LFM", resourceCulture);

@@ -56,6 +56,7 @@ namespace Domain
             var mlcJiraCount = JirasWithStatusForProjectCode("Awaiting Triage", "LCSMLC");
             var mlawJiraCount = JirasWithStatusForProjectCode("Awaiting Triage", "LCSMLAW");
             var lfmJiraCount = JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
+            var iqlJiraCount = JirasWithStatusForProjectCode("Awaiting Triage", "LCSIQL");
 
             var result = new PingResult();
             
@@ -67,6 +68,9 @@ namespace Domain
 
             if(lfmJiraCount > 0)
                 result.ProjectsWithT3.Add("LFM",lfmJiraCount);
+
+            if (iqlJiraCount > 0)
+                result.ProjectsWithT3.Add("IQL", iqlJiraCount);
 
             return result;
         }

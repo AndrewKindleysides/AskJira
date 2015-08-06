@@ -17,7 +17,8 @@ namespace Domain
             {
                 {"MLC", new SoundPlayer(Resource.MLC)},
                 {"MLAW", new SoundPlayer(Resource.MLAW)},
-                {"LFM", new SoundPlayer(Resource.LFM)}
+                {"LFM", new SoundPlayer(Resource.LFM)},
+                {"IQL", new SoundPlayer(Resource.IQL)},
             };
         }
 
