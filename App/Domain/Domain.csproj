@@ -58,6 +58,7 @@
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="SearchItem.cs" />
+    <Compile Include="TimeToDing.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
