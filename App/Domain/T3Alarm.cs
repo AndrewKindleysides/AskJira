@@ -22,6 +22,7 @@ namespace Domain
                 {"LFM", new SoundPlayer(Resource.LFM)},
                 {"IQL", new SoundPlayer(Resource.IQL)},
             };
+            _timeCheck = new TimeToDing();
         }
 
         public void Start(Func<PingResult> request)
