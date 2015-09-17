@@ -21,6 +21,7 @@ namespace Domain
             var url = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=status='{0}' AND project={1} AND 'T3 - Type' != 'Enhancement'", status, projectCode);
             var response = _client.DownloadString(url);
             var json = JObject.Parse(response);
+            Console.WriteLine("Jiras for: {0}", projectCode);
             Console.WriteLine("Time polled: {0}", DateTime.Now);
             Console.WriteLine("Json: {0}", json);
             Console.WriteLine();
@@ -50,16 +51,30 @@ namespace Domain
             };
         }
 
-        public int MLCT3AwaitingTriage()
+        public PingResult AllT3AwaitingTriage()
         {
-            return JirasWithStatusForProjectCode("Awaiting Triage", "LCSMLC");
-        }
+            var mlcJiraCount = JirasWithStatusForProjectCode("Awaiting Triage", "LCSMLC");
+            var mlawJiraCount = JirasWithStatusForProjectCode("Awaiting Triage", "LCSMLAW");
+            var lfmJiraCount = JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
+            var iqlJiraCount = JirasWithStatusForProjectCode("Awaiting Triage", "LCSIQL");
 
-        public int LaserformT3AwaitingTriage()
-        {
-            return JirasWithStatusForProjectCode("Awaiting Triage", "LCSLF");
-        }
+            var result = new PingResult();
+            
+            if (mlcJiraCount > 0)
+                result.ProjectsWithT3.Add("MLC",mlcJiraCount);    
+            
+            if (mlawJiraCount > 0)
+                result.ProjectsWithT3.Add("MLAW",mlawJiraCount);
 
+            if(lfmJiraCount > 0)
+                result.ProjectsWithT3.Add("LFM",lfmJiraCount);
+
+            if (iqlJiraCount > 0)
+                result.ProjectsWithT3.Add("IQL", iqlJiraCount);
+
+            return result;
+        }
+        
         public QueryResult SearchMLCJirasBatched(SearchItem searchItem, int pageNumber, int maxResults)
         {
             var query = new QueryBuilder().BuildBatched(searchItem, pageNumber, maxResults);

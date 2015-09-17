@@ -27,8 +27,6 @@ namespace App
             return _user.Base64Encode(string.Format("{0}:{1}", _user.Username, _user.Password));
         }
 
-        
-
         private static string ReturnPassword()
         {
             var password = "";
@@ -51,7 +49,7 @@ namespace App
                 }
             }
             for (var i = 0; i < password.Length; i++)
-                Console.Write("*");
+                Console.Write(@"*");
             return password;
         }
     }
