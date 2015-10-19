@@ -52,7 +52,7 @@ namespace UI
                 Headers = new WebHeaderCollection { "Authorization: Basic " + AppUser.AuthenticationToken() }
             };
 
-            _jiraRequest = new JiraRequest(webClient);
+            _jiraRequest = new JiraRequest(webClient, "http://sl1acsjira01:8080/");
             PopulateIssueTypesDropdown();
             PopulateComponentDropdown();
             PopulateFixVersionDropdown();

@@ -10,15 +10,17 @@ namespace Domain
     {
         private const string ClientNameField = "customfield_10200";
         private readonly WebClient _client;
+        private readonly string _jiraApiUrl;
 
-        public JiraRequest(WebClient client)
+        public JiraRequest(WebClient client, string jiraApiUrl)
         {
             _client = client;
+            _jiraApiUrl = jiraApiUrl;
         }
 
-        public int JirasWithStatusForProjectCode(string status, string projectCode)
+        private int JirasWithStatusForProjectCode(string status, string projectCode)
         {
-            var url = string.Format("https://jira.advancedcsg.com/rest/api/2/search?jql=status='{0}' AND project={1} AND 'T3 - Type' != 'Enhancement'", status, projectCode);
+            var url = string.Format("{0}/search?jql=status='{1}' AND project={2} AND 'T3 - Type' != 'Enhancement'", _jiraApiUrl, status, projectCode);
             var response = _client.DownloadString(url);
             var json = JObject.Parse(response);
             Console.WriteLine("Jiras for: {0}", projectCode);

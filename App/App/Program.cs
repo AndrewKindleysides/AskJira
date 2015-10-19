@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Configuration;
+using System.Net;
 using Domain;
 
 namespace App
@@ -12,7 +13,8 @@ namespace App
             {
                 Headers = new WebHeaderCollection { "Authorization: Basic " + auth }
             };
-            var jiraRequest = new JiraRequest(webClient);
+            var jiraApiUrl = ConfigurationManager.AppSettings["JiraApiUrl"];
+            var jiraRequest = new JiraRequest(webClient, jiraApiUrl);
             new T3Alarm().Start(jiraRequest.AllT3AwaitingTriage);
         }
     }
