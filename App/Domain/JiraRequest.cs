@@ -21,13 +21,21 @@ namespace Domain
         private int JirasWithStatusForProjectCode(string status, string projectCode)
         {
             var url = string.Format("{0}/search?jql=status='{1}' AND project={2} AND 'T3 - Type' != 'Enhancement'", _jiraApiUrl, status, projectCode);
-            var response = _client.DownloadString(url);
-            var json = JObject.Parse(response);
-            Console.WriteLine("Jiras for: {0}", projectCode);
-            Console.WriteLine("Time polled: {0}", DateTime.Now);
-            Console.WriteLine("Json: {0}", json);
-            Console.WriteLine();
-            return (int)json["total"];
+            try
+            {
+                var response = _client.DownloadString(url);
+                var json = JObject.Parse(response);
+                Console.WriteLine("Jiras for: {0}", projectCode);
+                Console.WriteLine("Time polled: {0}", DateTime.Now);
+                Console.WriteLine("Json: {0}", json);
+                Console.WriteLine();
+                return (int)json["total"];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return -1;
+            }           
         }
 
         private static QueryResult GetJirasFromResult(string response)
