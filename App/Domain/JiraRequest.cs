@@ -27,9 +27,10 @@ namespace Domain
                 var json = JObject.Parse(response);
                 Console.WriteLine("Jiras for: {0}", projectCode);
                 Console.WriteLine("Time polled: {0}", DateTime.Now);
-                Console.WriteLine("Json: {0}", json);
+                var totalT3Jiras = (int)json["total"];
+                Console.WriteLine("Number of T3 Jiras found: {0}", totalT3Jiras);
                 Console.WriteLine();
-                return (int)json["total"];
+                return totalT3Jiras;
             }
             catch (Exception ex)
             {
