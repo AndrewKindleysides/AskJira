@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Domain.Tests
@@ -44,10 +40,38 @@ namespace Domain.Tests
             var result = timer.CheckTime(now);
             Assert.False(result);
         }
+
         [Fact]
         public void no_ding_at_the_weekend()
         {
             var now = DateTime.Parse("2015/09/19 09:59:58");
+            var timer = new TimeToDing();
+            var result = timer.CheckTime(now);
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void no_ding_on_xmas_day()
+        {
+            var now = DateTime.Parse("2015/12/25 09:59:58");
+            var timer = new TimeToDing();
+            var result = timer.CheckTime(now);
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void no_ding_on_boxing_day()
+        {
+            var now = DateTime.Parse("2015/12/26 09:59:58");
+            var timer = new TimeToDing();
+            var result = timer.CheckTime(now);
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void no_ding_on_new_years_day()
+        {
+            var now = DateTime.Parse("2015/1/1 09:59:58");
             var timer = new TimeToDing();
             var result = timer.CheckTime(now);
             Assert.False(result);
